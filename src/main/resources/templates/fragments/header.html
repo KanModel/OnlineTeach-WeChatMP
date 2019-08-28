@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="zh">
+<head>
+    <div th:fragment="header-css">
+        <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" th:href="@{/main.css}"/>
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <!-- this is header -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="container-fluid navbar-header">
+                <a class="navbar-brand" th:href="@{/}" th:text="${site_name}">在线学习网站</a>
+            </div>
+            <div>
+                <form th:action="@{/post/list}">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a th:href="@{/post/list}">内容列表</a></li>
+                        <li sec:authorize="isAuthenticated()" class="active"><a th:href="@{/space}">个人空间</a></li>
+                        <li sec:authorize="isAuthenticated()" class="active"><a th:href="@{/favorite}">我的收藏</a></li>
+                        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')" class="active"><a
+                                th:href="@{/post/add}">创建内容</a>
+                        </li>
+                        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')" class="active"><a
+                                th:href="@{/user}">用户管理</a></li>
+                        <li sec:authorize="hasAnyRole('ROLE_SUPER')" class="active"><a th:href="@{/manage}">系统设置</a>
+                        </li>
+                        <li>
+                            <input type="text" class="form-control"
+                                   name="title"
+                                   style="    width: 150px;margin-top: 10px;margin-left:10px;height: 25px;"
+                                   placeholder="搜索">
+                        </li>
+                        <li>
+                            <button type="submit" class="btn btn-default btn-sm"
+                                    style="margin-left: 20px;margin-top: 10px;height: 25px;">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>

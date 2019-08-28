@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="zh">
+<head>
+    <title th:text="${'教学内容-' + post.title}"></title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <th:block th:if="${post} != null">
+        <h1 th:text="${post.title}"></h1>
+        <div>
+            <span th:unless="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
+                  th:text="'发布于:' + ${post.getCreatedTimeFormat()}"
+                  class="text-info"></span>
+            <span th:if="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
+                  th:text="'发布于:' + ${post.getCreatedTimeFormat()} + ' 最后修改:' + ${post.getModifiedTimeFroma()}"
+                  class="text-info"></span>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/favorite/add}" method="post">
+                    <label>
+                        <input type="hidden" th:value="${post.id}" name="post">
+                        <button type="submit" class="btn">收藏</button>
+                    </label>
+                </form>
+            </div>
+        </div>
+        <div id="layout">
+            <div id="test-editormd-view2">
+                <textarea id="append-test" style="display:none;" th:text="${post.content}"></textarea>
+            </div>
+        </div>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/lib/marked.min.js"></script>
+        <script src="/lib/prettify.min.js"></script>
+
+        <script src="/lib/raphael.min.js"></script>
+        <script src="/lib/underscore.min.js"></script>
+        <script src="/lib/sequence-diagram.min.js"></script>
+        <script src="/lib/flowchart.min.js"></script>
+        <script src="/lib/jquery.flowchart.min.js"></script>
+
+        <script src="/js/editormd.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                var testEditormdView2;
+                testEditormdView2 = editormd.markdownToHTML("test-editormd-view2", {
+                    htmlDecode: "style,script,iframe",  // you can filter tags decode
+                    emoji: true,
+                    taskList: true,
+                    tex: true,  // 默认不解析
+                    flowChart: true,  // 默认不解析
+                    sequenceDiagram: true,  // 默认不解析
+                });
+            });
+        </script>
+        <form th:action="@{'/post/edit/p' + ${post.id}}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')">
+            <div class="center-block">
+                <button type="submit" class="btn">编辑</button>
+            </div>
+        </form>
+    </th:block>
+    <th:block th:unless="${post} != null">
+        <p class="danger">无此内容</p>
+    </th:block>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

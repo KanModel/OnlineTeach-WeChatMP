@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="zh">
+<head>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:fragment="user-nav">
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li><a href="/user">用户管理</a></li>
+            <li><a href="/user/list">用户清单</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

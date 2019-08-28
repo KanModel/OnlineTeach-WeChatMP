@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>系统设置</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/user_nav :: user-nav"></div>
+<div class="container">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>序号</td>
+            <td>id</td>
+            <td>说明</td>
+            <td>属性名</td>
+            <td>属性值</td>
+            <td>修改</td>
+        </tr>
+        <th:block th:each="option, iter:${optionList}">
+            <tr>
+                <td th:text="${iter.index + 1}"></td>
+                <td th:text="${option.id}"></td>
+                <td th:text="${option.description}"></td>
+                <td th:text="${option.key}"></td>
+                <td th:text="${option.value}"></td>
+                <td>
+                    <form th:action="@{/manage/option/edit}" method="post" style="margin-top: 16px">
+                        <label>
+                            <input type="text" th:name="value" class="form-control">
+                        </label>
+                        <button type="submit" th:name="id" th:value="${option.id}" class="btn btn-primary">修改</button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

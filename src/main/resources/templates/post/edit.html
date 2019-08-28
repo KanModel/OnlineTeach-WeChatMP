@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>编辑内容</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editormd.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <th:block th:if="${post} != null">
+        <div class="container">
+            <p class="text-center"><a th:href="@{'/post/p' + ${post.id}}">查看页面</a> <a th:href="@{'/post/del/p' + ${post.id}}">删除</a></p>
+            <form th:action="@{/post/modify}" method="post">
+                <div class="form-group">
+                    <label for="title" class="col-sm-1-12 col-form-label"></label>
+                    <div class="col-sm-1-12">
+                        <header>标题</header>
+                        <input type="text" th:value="${post.title}" width="80%"
+                               class="form-control input-normal" name="title" id="title">
+                    </div>
+                    <p th:if="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
+                       th:text="'发布于:' + ${post.getCreatedTimeFormat()} + ' 最后修改:' + ${post.getModifiedTimeFroma()}"
+                       class="text-info">
+                    </p>
+                    <p th:unless="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
+                       th:text="'发布于:' + ${post.getCreatedTimeFormat()}"
+                       class="text-info">
+                    </p>
+                    <div class="col-sm-1-12">
+                        <header>内容编辑</header>
+                        <div id="layout">
+                            <label for="content" class="col-sm-1-12 col-form-label"></label>
+                            <div id="test-editormd">
+                                <textarea class="form-control" name="content" id="content" placeholder="请输入内容"
+                                          th:text="${post.content}" style="display:none;">
+                                </textarea>
+                            </div>
+                        </div>
+                        <script src="/js/jquery.min.js"></script>
+                        <script src="/js/editormd.min.js"></script>
+                        <script type="text/javascript">
+                            var testEditor;
+
+                            $(function () {
+                                testEditor = editormd("test-editormd", {
+                                    width: "90%",
+                                    height: 640,
+                                    syncScrolling: "single",
+                                    path: "/lib/"
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="center-block">
+                    <button type="submit" th:value="${post.id}" name="id" class="btn">提交</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </th:block>
+    <th:block th:unless="${post} != null">
+        <p class="danger">无此内容</p>
+    </th:block>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

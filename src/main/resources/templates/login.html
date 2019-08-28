@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>登录页面</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!--<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>-->
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="center-block">
+        <h1>登录</h1>
+        <p th:if="${logout}" class="bg-warning">已注销</p>
+        <p th:if="${passerror}" class="bg-danger">有错误，请重试</p>
+        <form th:action="@{/login}" method="post" role="form">
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" class="form-control" placeholder="请输入用户名..."
+                       id="username" name="username" autofocus="autofocus"/>
+            </div>
+            <div class="form-group">
+                <label for="password">密码:</label>
+                <input type="password" class="form-control" placeholder="请输入密码..."
+                       id="password" name="password"/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">登录</button>
+            </div>
+        </form>
+    </div>
+    <span sec:authorize="isAuthenticated()">
+        <script>
+            window.location.href='/space';
+        </script>
+    </span>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

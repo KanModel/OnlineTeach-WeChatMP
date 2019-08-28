@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>创建内容</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editormd.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="container">
+        <form th:action="@{/post/create}" method="post">
+            <div class="form-group">
+                <label for="title" class="col-sm-1-12 col-form-label"></label>
+                <div class="col-sm-1-12">
+                    <header>标题</header>
+                    <input type="text"
+                           class="form-control input-normal" name="title" id="title">
+                </div>
+                <div class="col-sm-1-12">
+                    <header>内容编辑</header>
+                    <div class="col-sm-1-12">
+                        <div id="layout">
+                            <label for="content" class="col-sm-1-12 col-form-label"></label>
+                            <div id="test-editormd">
+                                <textarea class="form-control" name="content" id="content" placeholder="请输入内容"
+                                          th:text="''" style="display:none;">
+                                </textarea>
+                            </div>
+                        </div>
+                        <script src="/js/jquery.min.js"></script>
+                        <script src="/js/editormd.min.js"></script>
+                        <script type="text/javascript">
+                            var testEditor;
+
+                            $(function () {
+                                testEditor = editormd("test-editormd", {
+                                    width: "90%",
+                                    height: 640,
+                                    syncScrolling: "single",
+                                    path: "/lib/"
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="center-block">
+                <button type="submit" class="btn">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>用户管理</title>
+    <script type="text/javascript" src="webjars/jquery/1.11.1/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/user_nav :: user-nav"></div>
+<div class="container tab-content">
+    <div style="margin: auto;width: 500px;height: auto;padding: 40px;">
+        <p style="color: black">添加用户</p>
+        <form th:action="@{/user/add}" method="post">
+            <label for="login">Username</label>:
+            <input type="text" id="login" name="login" autofocus="autofocus" class="form-control"/> <br/>
+            <label for="pass">Password</label>:
+            <input type="password" id="pass" name="pass" class="form-control"/> <br/>
+            <input type="submit" class="btn btn-default" value="添加" style="float:right;"/>
+        </form>
+        <p style="color: black">随机生成用户</p>
+        <form th:action="@{/user/randomadd}" method="post">
+            <label for="count">数量</label>:
+            <input type="text" id="count" name="count" class="form-control"/> <br/>
+            <label for="pass">默认密码</label>:
+            <input type="password" name="pass" class="form-control"/> <br/>
+            <input type="submit" class="btn btn-default" value="添加" style="float:right;"/>
+        </form>
+
+        <p th:text="${add_res}"></p>
+        <p style="color: black">查找用户</p>
+        <form th:action="@{/user/find}" method="post">
+            <label for="id">ID</label>:
+            <input type="text" id="id" name="id" class="form-control"/> <br/>
+            <label for="name">Username</label>:
+            <input type="text" id="name" name="name" class="form-control"/> <br/>
+            <input type="submit" class="btn btn-default" style="float: right" value="查找">
+        </form>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

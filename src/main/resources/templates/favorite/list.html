@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>我的收藏</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <p th:if="${res} != null" th:text="${res}" class="bg-warning"></p>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>序号</td>
+            <!--<td>id</td>-->
+            <td>标题</td>
+            <td>收藏时间</td>
+            <td>删除</td>
+        </tr>
+        <th:block th:each="fav, iter:${fav_list}">
+            <tr>
+                <td th:text="${iter.index + 1}"></td>
+                <!--<td th:text="${fav.id}"></td>-->
+                <td><a th:text="${fav.post.title}" th:href="@{'/post/p' + ${fav.post.id}}"></a></td>
+                <td th:text="${fav.time}"></td>
+                <td>
+                    <form th:action="@{/favorite/del}" method="post">
+                        <button type="submit" th:name="id" th:value="${fav.id}"
+                                class="btn-danger btn">删除
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

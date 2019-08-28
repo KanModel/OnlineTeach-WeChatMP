@@ -1,0 +1,31 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="jumbotron">
+        <h1 th:text="${index_title}">大标题</h1>
+        <p th:text="${index_subtitle}">副标题</p>
+    </div>
+    <div class="row">
+        <th:block th:each="post, iter:${list}">
+            <div class="col-sm-6" th:if="${iter.index} < 6">
+                <a th:href="@{'/post/p' + ${post.id}}"><h3 th:text="${post.title}"></h3></a>
+                <p th:text="${post.getCreatedTimeFormat()}" class="text-info"></p>
+                <p th:text="${post.getShort()}"></p>
+            </div>
+        </th:block>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
