@@ -17,7 +17,7 @@ var wxApi = require('../../utils/wxApi.js')
 var wxRequest = require('../../utils/wxRequest.js')
 import config from '../../utils/config.js'
 
-var pageCount = 6;
+var pageCount = config.getPageCount;
 
 var app = getApp()
 
@@ -34,11 +34,7 @@ Page({
         showallDisplay: "block",
         displayHeader: "none",
         displaySwiper: "none",
-        floatDisplay: "none",
-        displayfirstSwiper: "none",
-        topNav: []
-
-
+        floatDisplay: "none"
     },
     formSubmit: function (e) {
         var url = '../list/list'
@@ -110,11 +106,6 @@ Page({
     onLoad: function (options) {
         var self = this;
         self.fetchPostsData(self.data);
-        self.setData({
-            topNav: config.getIndexNav
-
-        });
-
     },
     onShow: function (options) {
         wx.setStorageSync('openLinkCount', 0);
@@ -153,6 +144,7 @@ Page({
             success: function (result) {
                 console.log(result);
                 self.setData({
+                    floatDisplay: "block",
                     postsList: self.data.postsList.concat(result.data)
                 });
                 setTimeout(function () {
