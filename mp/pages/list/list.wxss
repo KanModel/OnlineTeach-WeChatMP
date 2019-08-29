@@ -69,7 +69,7 @@
   position: absolute;
   border-bottom: 1px solid #fff; 
   z-index: 2;
-  left: 64rpx;
+  /*left: 64rpx;*/
   top: 180rpx;
 }
 

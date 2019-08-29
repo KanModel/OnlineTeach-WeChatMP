@@ -18,6 +18,9 @@
 
 <!--引入towxml模版入口文件，并使用模版-->
 <import src="/towxml/entry.wxml"/>
+<view class = 'container'>
+   <button style="margin-top: 10px" onclick="">收藏</button>
+</view>
 <template is="entry" data="{{...article}}"/>
 
 <view class="container">

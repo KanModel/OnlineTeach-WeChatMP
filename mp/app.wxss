@@ -71,7 +71,7 @@
 /*common list  for  index  list page */
 
 .common-list {
-  margin-bottom: 24rpx;
+  /*margin-bottom: 24rpx;*/
 }
 
 .common-list .list-item {
@@ -92,9 +92,12 @@
 }
 
 .common-list .list-item.has-img .content-title {
-  margin-left: 200rpx;
+  /*margin-left: 200rpx;*/
+    text-align: center;
+  font-size: 100px;
   height: 80rpx;
   margin-bottom: 20rpx;
+    padding-top: 10px   ;
 }
 
 .common-list .list-item.has-img .content-title text {
@@ -104,14 +107,15 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: 30rpx;
+  font-size: 50rpx;
   line-height: 1.4;
   font-weight: 400;
   color: #3a4040;
 }
 
 .common-list .list-item.has-img .content-date {
-  margin-left: 200rpx;
+    /*text-align: center;*/
+    /*margin: auto;*/
 }
 
 .common-list .list-item.has-img .content-date image {

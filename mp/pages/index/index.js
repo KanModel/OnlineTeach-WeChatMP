@@ -118,8 +118,8 @@ Page({
         var self = this;
         if (!data) data = {};
         if (!data.page) data.page = 1;
-        // if (!data.categories) data.categories = 0;
-        // if (!data.search) data.search = '';
+        if (!data.categories) data.categories = 0;
+        if (!data.search) data.search = '';
         if (data.page === 1) {
             self.setData({
                 postsList: []
