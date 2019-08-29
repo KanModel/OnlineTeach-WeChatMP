@@ -327,21 +327,26 @@ Page({
         getPostDetailRequest
             .then(response => {
                 res = response;
-                if(response.data.code  && (response.data.data.status=="404"))
-                {
+                console.log(res)
+                if (response.data.code && (response.data.data.status == "404")) {
                     self.setData({
-                        showerror:'block',
+                        showerror: 'block',
                         display: 'none',
-                        errMessage:response.data.message   
+                        errMessage: response.data.message
                     });
-
                     return false;
-
                 }
                 wx.setNavigationBarTitle({
-                    title: res.data.title.rendered
+                    title: res.data.title
                 });
-                WxParse.wxParse('article', 'html', response.data.content.rendered, self, 5);
+                let data = app.towxml.toJson(res.data.content ,'markdown');
+
+                //设置数据
+                self.setData({
+                    article: data
+                });
+
+                /*WxParse.wxParse('article', 'html', response.data.content.rendered, self, 5);
                 if (response.data.total_comments != null && response.data.total_comments != '') {
                     self.setData({
                         commentCount: "有" + response.data.total_comments + "条评论"
@@ -351,7 +356,7 @@ Page({
                 if (response.data.like_count != '0') {
                     _displayLike = "block"
                 }
-                
+
                 self.setData({
                     detail: response.data,
                     likeCount: _likeCount,
@@ -380,11 +385,10 @@ Page({
                 }
                 logs.unshift([id, response.data.title.rendered]);
                 wx.setStorageSync('readLogs', logs);
-                //end 
+                //end */
 
             })
-            .then(response => {
-                
+            /*.then(response => {
 
             })
             .then(response => {
@@ -430,10 +434,7 @@ Page({
             .catch(function (error) {
                console.log('error: ' + error);
 
-            })
-            
-
-
+            })*/
     },
     //给a标签添加跳转和复制链接事件
     wxParseTagATap: function (e) {

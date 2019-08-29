@@ -18,6 +18,8 @@ var indexListType = config.getIndexListType;
 var HOST_URI = 'https://' + domain+'/wp-json/wp/v2/';
 // var HOST_URI = 'http://localhost:8088/';
 var HOST_URI_WATCH_LIFE_JSON = 'https://' + domain + '/wp-json/watch-life-net/v1/';
+
+var app = getApp()
    
 module.exports = {  
   // 获取文章列表数据
@@ -94,7 +96,7 @@ module.exports = {
   // 获取内容页数据
   getPostByID: function (id) {
     
-    return HOST_URI + 'posts/' + id;
+    return app.globalData.url + 'post/' + id;
   },
   // 获取页面列表数据
   getPages: function () {

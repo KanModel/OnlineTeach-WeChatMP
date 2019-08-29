@@ -8,7 +8,7 @@
  * Copyright (c) 2017 https://www.watch-life.net All rights reserved.
  * 
  */
-
+const Towxml = require('/towxml/main');     //引入towxml库
 
 App({
     
@@ -22,6 +22,7 @@ App({
 
     
   },
+  towxml:new Towxml(),
   getUserInfo:function(cb){
     var that = this
     if(this.globalData.userInfo){
