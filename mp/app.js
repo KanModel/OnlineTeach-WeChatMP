@@ -72,7 +72,7 @@ App({
     userInfo: null,
     openid: '',
     isGetUserInfo: false,
-    isGetOpenid: false
-
+    isGetOpenid: false,
+    url: 'http://localhost:8088/api/'
   }
 })

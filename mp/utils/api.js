@@ -16,25 +16,28 @@ var pageCount = config.getPageCount;
 var categoriesID = config.getCategoriesID;
 var indexListType = config.getIndexListType;
 var HOST_URI = 'https://' + domain+'/wp-json/wp/v2/';
+// var HOST_URI = 'http://localhost:8088/';
 var HOST_URI_WATCH_LIFE_JSON = 'https://' + domain + '/wp-json/watch-life-net/v1/';
    
 module.exports = {  
   // 获取文章列表数据
   getPosts: function (obj) {
-      var url = HOST_URI + 'posts?per_page=' + pageCount+'&orderby=date&order=desc&page=' + obj.page;
-    
-    if (obj.categories != 0) {
-      url += '&categories=' + obj.categories;
-    }
-    else if (obj.search != '') {
-      url += '&search=' + encodeURIComponent(obj.search);
-    }
-    else{
-        if (indexListType !='all')
-        {
-            url += '&categories=' + indexListType;
-        }
-    }     
+    // var url = HOST_URI + 'api/post/list';
+    console.log(obj)
+    var url = HOST_URI + 'posts?per_page=' + pageCount + '&orderby=date&order=desc&page=' + obj.page;
+    // var url = HOST_URI + 'posts';
+    // if (obj.categories != 0) {
+    //   url += '&categories=' + obj.categories;
+    // }
+    // else if (obj.search != '') {
+    //   url += '&search=' + encodeURIComponent(obj.search);
+    // }
+    // else{
+    //     if (indexListType !='all')
+    //     {
+    //         url += '&categories=' + indexListType;
+    //     }
+    // }     
     return url;
 
   },
