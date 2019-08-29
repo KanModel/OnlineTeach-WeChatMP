@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**", "/js/**", "/fonts/**", "/images/**", "/api/**").permitAll()
                 .antMatchers("/space/**", "/user/edit/display", "/favorite/**", "/favorite",
                         "/logout", "/user/edit/mpass").authenticated()
-                .antMatchers("/manage**").hasAnyRole("SUPER")
+                .antMatchers("/manage**", "/swagger-ui.html").hasAnyRole("SUPER")
                 .anyRequest().hasAnyRole("ADMIN", "SUPER")
                 .and()
                 .formLogin()

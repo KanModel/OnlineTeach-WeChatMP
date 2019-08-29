@@ -5,33 +5,42 @@ package me.kanmodel.july19.onlineteach.entity;/**
  * Date: 2019-06-25-10:44
  */
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 /**
- * @description: todo
+ * @description: 内容JavaBean
  * @author: KanModel
  * @create: 2019-06-25 10:44
  */
 
+@ApiModel("内容")
 @Entity
 @Table(name = "sys_post")
 public class Post {
+    @ApiModelProperty(value = "id", example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    @ApiModelProperty("内容标题")
     @Column(name = "title", columnDefinition = "varchar(50)  default ''")
     private String title;
 
+    @ApiModelProperty("内容内容")
     @Column(name = "content", columnDefinition = "text")
     private String content;
 
+    @ApiModelProperty("内容创建时间")
     @Column(name = "created_time", columnDefinition = "datetime")
     private Timestamp createdTime;
 
+    @ApiModelProperty("内容修改时间")
     @Column(name = "modified_time", columnDefinition = "datetime")
     private Timestamp modifiedTime;
 
