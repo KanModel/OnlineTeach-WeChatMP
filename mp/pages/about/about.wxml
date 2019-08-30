@@ -21,7 +21,7 @@
     <view class="wrapper">
         <view class="excerpt">
             <!--  <rich-text nodes="{{pageData.content.rendered}}"></rich-text> -->
-            <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+            <!--<template is="wxParse" data="{{wxParseData:article.nodes}}" />-->
             <view>
                 <text style="font-size: 50rpx;color: #0a001f">
                     平台概述
