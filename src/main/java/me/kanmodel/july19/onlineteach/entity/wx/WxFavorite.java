@@ -3,6 +3,7 @@ package me.kanmodel.july19.onlineteach.entity.wx;
 import me.kanmodel.july19.onlineteach.entity.Post;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "wx_favorite")
@@ -11,11 +12,15 @@ public class WxFavorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wx_favorite_id")
     private Long id;
-    private Long postid;
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
     private String openid;
+    @Column(name = "time", columnDefinition = "datetime default current_timestamp")
+    private Timestamp time;
 
-    public WxFavorite(Long postid, String openid) {
-        this.postid = postid;
+    public WxFavorite(Post post, String openid) {
+        this.post = post;
         this.openid = openid;
     }
 
@@ -30,12 +35,12 @@ public class WxFavorite {
         this.id = id;
     }
 
-    public Long getPostid() {
-        return postid;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostid(Long postid) {
-        this.postid = postid;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public String getOpenid() {
@@ -44,5 +49,13 @@ public class WxFavorite {
 
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 }
