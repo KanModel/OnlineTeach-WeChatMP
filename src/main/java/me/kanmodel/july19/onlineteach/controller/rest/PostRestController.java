@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(value = "内容管理", tags = {"获取内容接口"})
+@Api(tags = "内容管理")
 @RestController
 @RequestMapping("/api/post")
 public class PostRestController {

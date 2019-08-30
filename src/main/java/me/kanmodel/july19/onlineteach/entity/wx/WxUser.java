@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class WxUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "wx_id")
+    @Column(name = "wx_user_id")
     private Long id;
 
     private String openid;

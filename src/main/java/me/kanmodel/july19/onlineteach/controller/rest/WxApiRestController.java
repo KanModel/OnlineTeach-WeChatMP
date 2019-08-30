@@ -31,7 +31,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api("微信API")
+@Api(tags = "微信API")
 @RestController
 @RequestMapping("/api/wx")
 public class WxApiRestController {
