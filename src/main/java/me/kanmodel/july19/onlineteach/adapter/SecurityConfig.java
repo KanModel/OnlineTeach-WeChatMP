@@ -30,13 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomUserService();
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            "/", "/index", "/webjars/**", "/post/p**", "/post/list", "/lib/**",
+            "/css/**", "/js/**", "/fonts/**", "/images/**",
+            //REST
+            "/api/**"
+    };
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-//        http.csrf().disable()
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/webjars/**", "/post/p**", "/post/list", "/lib/**",
-                        "/css/**", "/js/**", "/fonts/**", "/images/**", "/api/**").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/space/**", "/user/edit/display", "/favorite/**", "/favorite",
                         "/logout", "/user/edit/mpass").authenticated()
                 .antMatchers("/manage**", "/swagger-ui.html").hasAnyRole("SUPER")

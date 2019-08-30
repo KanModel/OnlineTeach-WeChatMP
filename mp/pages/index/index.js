@@ -15,6 +15,7 @@ var util = require('../../utils/util.js');
 var WxParse = require('../../wxParse/wxParse.js');
 var wxApi = require('../../utils/wxApi.js')
 var wxRequest = require('../../utils/wxRequest.js')
+var Auth = require('../../utils/auth.js');
 import config from '../../utils/config.js'
 
 var pageCount = config.getPageCount;
@@ -106,6 +107,7 @@ Page({
     onLoad: function (options) {
         var self = this;
         self.fetchPostsData(self.data);
+        Auth.wxLogin()
     },
     onShow: function (options) {
         wx.setStorageSync('openLinkCount', 0);

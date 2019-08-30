@@ -9,12 +9,15 @@ public class WxUserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wx_id")
     private Long id;
-    private String openId;
+    private String openid;
     private String name;
 
     public WxUserInfo(String openId, String name) {
-        this.openId = openId;
+        this.openid = openId;
         this.name = name;
+    }
+
+    public WxUserInfo() {
     }
 
     public Long getId() {
@@ -25,12 +28,12 @@ public class WxUserInfo {
         this.id = id;
     }
 
-    public String getOpenId() {
-        return openId;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 
     public String getName() {

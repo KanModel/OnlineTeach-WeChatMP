@@ -181,7 +181,23 @@ Auth.setUserInfoData = function(appPage)
 Auth.wxLogin=function(){
         return new Promise(function (resolve, reject) {
             wx.login({
-                success: function (res) {               
+                success: function (res) {
+                    console.log('wxLogin', res)
+                    wx.request({
+                        url: app.globalData.url + 'wx/login',
+                        method: "POST",
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded'
+                        },
+                        data: {
+                            code : res.code
+                        },
+                        success: function (result) {
+                            console.log('wx/login', result);
+                            app.globalData.openid = result.data.openid
+                            app.globalData.sig = result.data.sig
+                        }
+                    })
                     let args = {};
                     args.js_code = res.code;                                
                     resolve(args);                
