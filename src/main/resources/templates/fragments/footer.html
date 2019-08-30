@@ -10,7 +10,7 @@
         <!-- this is footer -->
         © 2019 KanModel <a th:href="@{/}">首页</a>
             <span sec:authorize="isAnonymous()">
-                | <a href="/login">登录</a>
+                | <a href="/login">登录</a> | <a href="/reg">注册</a>
             </span>
             <span sec:authorize="isAuthenticated()">
                 | 已登录: <span sec:authentication="name"></span> |

@@ -13,6 +13,7 @@
         <h1>登录</h1>
         <p th:if="${logout}" class="bg-warning">已注销</p>
         <p th:if="${passerror}" class="bg-danger">有错误，请重试</p>
+        <p th:if="${add_res}" th:text="${add_res}" class="bg-danger"></p>
         <form th:action="@{/login}" method="post" role="form">
             <div class="form-group">
                 <label for="username">用户名:</label>

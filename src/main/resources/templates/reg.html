@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!--<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>-->
+    <script type="text/javascript">
+        function checkConfirm() {
+            if (document.regForm.username.value === "") {
+                alert("请填写用户名！");
+                document.regForm.username.focus();
+                return false;
+            }
+            if (document.regForm.password.value.length < 6) {
+                alert("密码不能小于6个字符！");
+                document.regForm.password.focus();
+                return false;
+            }
+            if (document.regForm.password.value !== document.regForm.confirm.value) {
+                alert("密码与确认密码不一致!");
+                document.regForm.confirm.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="center-block">
+        <h1>新用户注册</h1>
+        <form name="regForm" th:action="@{/reg}" method="post" role="form" th:onsubmit="'return checkConfirm()'">
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" class="form-control" placeholder="请输入用户名..."
+                       id="username" name="username" autofocus="autofocus"/>
+            </div>
+            <div class="form-group">
+                <label for="password">密码:</label>
+                <input type="password" class="form-control" placeholder="请输入密码..."
+                       id="password" name="password"/>
+            </div>
+            <div class="form-group">
+                <label for="password">确认密码:</label>
+                <input type="password" class="form-control" placeholder="请输入确认密码..."
+                       id="confirm" name="confirm"/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">注册</button>
+            </div>
+        </form>
+    </div>
+    <span sec:authorize="isAuthenticated()">
+        <script>
+            window.location.href = '/space';
+        </script>
+    </span>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
