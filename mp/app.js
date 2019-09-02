@@ -17,7 +17,8 @@ App({
         sig: null,
         isGetUserInfo: false,
         isGetOpenid: false,
-        url: 'http://localhost:8088/api/'
+        url: 'http://localhost:8088/api/',
+        detailTo:-1,
     },
     onLaunch: function () {
         //调用API从本地缓存中获取数据

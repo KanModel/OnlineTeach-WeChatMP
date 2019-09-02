@@ -274,6 +274,7 @@ Page({
     redictDetail: function (e) {
         // console.log('查看文章');
         console.log(e)
+        app.globalData.detailTo = 0;
         var id = e.currentTarget.id,
             url = '../detail/detail?id=' + id;
         wx.navigateTo({

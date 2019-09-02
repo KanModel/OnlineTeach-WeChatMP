@@ -239,13 +239,14 @@ Page({
     // 跳转至查看文章详情
     redictDetail: function (e) {
         // console.log('查看文章');
+        app.globalData.detailTo = 1;
         var id = e.currentTarget.id;
         var itemtype = e.currentTarget.dataset.itemtype;
         var url = "";
         if (itemtype == "1") {
             url = '../list/list?categoryID=' + id;
         } else {
-            url = '../detailFavorite/detailFavorite?id=' + id;
+            url = '../detail/detail?id=' + id;
 
         }
 

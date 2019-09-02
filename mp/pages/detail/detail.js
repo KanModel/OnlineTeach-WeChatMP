@@ -84,7 +84,8 @@ Page({
 
         var self=this;
         self.setData({
-            id:options.id
+            id:options.id,
+            detailTo:app.globalData.detailTo
         })
         self.getEnableComment();
         self.fetchDetailData(options.id);        
@@ -99,7 +100,7 @@ Page({
         new ModalView;
     },
     postFavorite:function () {
-    if(app.globalData.isGetUserInfo){
+    if(app.globalData.isGetUserInfo&&app.globalData.detailTo==0){
         wx.request({
             url: app.globalData.url+'fav/'+this.data.id,
             data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
@@ -115,6 +116,10 @@ Page({
                         icon:'success',
                         duration:2000
                     })
+                    setTimeout(function(){
+                        wx.navigateBack({
+                        })
+                    },2000)
                 } else if(res.statusCode == 409){
                     console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
                     wx.showToast({
@@ -122,6 +127,10 @@ Page({
                         icon:'none',
                         duration:2000
                     })
+                    setTimeout(function(){
+                        wx.navigateBack({
+                        })
+                    },2000)
                 }
             },
             fail: function () {
@@ -131,7 +140,48 @@ Page({
                 // complete
             }
         })
-    }else{
+    }else if(app.globalData.isGetUserInfo&&app.globalData.detailTo==1){
+        wx.request({
+            url: app.globalData.url+'fav/'+this.data.id,
+            data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
+            method: 'DELETE', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },// 设置请求的 header
+            success: function (res) {
+                console.log(res.statusCode)
+                if (res.statusCode == 200||res.statusCode == 202) {
+                    wx.showToast({
+                        title:'取消成功',
+                        icon:'success',
+                        duration:2000
+                    })
+                    setTimeout(function(){
+                        wx.navigateBack({
+                        })
+                    },2000)
+                } else if(res.statusCode == 409) {
+                    console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
+                    wx.showToast({
+                        title: '重复添加',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                    setTimeout(function(){
+                        wx.navigateBack({
+                        })
+                    },2000)
+                }
+            },
+            fail: function () {
+                console.log("index.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+
+            }
+        })
+    }
+    else{
         wx.showToast({
             title:'请先登录',
             icon:'none',
