@@ -105,13 +105,15 @@ Page({
 
     },
     onLoad: function (options) {
+
         var self = this;
         self.fetchPostsData(self.data);
         Auth.wxLogin()
+
     },
     onShow: function (options) {
         wx.setStorageSync('openLinkCount', 0);
-
+        console.log(app.globalData.isGetUserInfo)
     },
 
     //获取文章列表数据
@@ -271,6 +273,7 @@ Page({
     // 跳转至查看文章详情
     redictDetail: function (e) {
         // console.log('查看文章');
+        console.log(e)
         var id = e.currentTarget.id,
             url = '../detail/detail?id=' + id;
         wx.navigateTo({

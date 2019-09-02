@@ -1,4 +1,4 @@
-/*
+  /*
  * 
  * WordPres版微信小程序
  * author: jianbo
@@ -19,22 +19,17 @@ var wxRequest = require('../../utils/wxRequest.js');
 var app = getApp();
 Page({
 
-  data: {    
+  data: {
+      postsList:[],
+      br:"\n",
+    userInfo: {},
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     readLogs: [],
-    topBarItems: [
-        // id name selected 选中状态
-        { id: '1', name: '浏览', selected: true },
-        { id: '2', name: '评论', selected: false},
-        { id: '3', name: '点赞', selected: false },
-        { id: '4', name: '鼓励', selected: false },
-        { id: '5', name: '订阅', selected: false },
-        { id: '6', name: '言论', selected: false }
-    ],
     tab: '1',
     showerror: "none",
     shownodata:"none",
     subscription:"",
-    userInfo:{},
     userLevel:{},
     openid:'',
     isLoginPopup: false  
@@ -43,14 +38,132 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {  
-    var self = this;     
+  onLoad: function (options) {
+      var self = this;
     self.fetchPostsData('1');
-    Auth.setUserInfoData(self); 
-    Auth.checkLogin(self);
-    
+    // Auth.setUserInfoData(self);
+    // Auth.checkLogin(self);
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    } else if (this.data.canIUse) {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    }
   },
+    onShow: function(e) {
+        // console.log("调用了onshow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        var that = this
+        console.log(that.data.hasUserInfo)
+        if(that.data.hasUserInfo){
+            wx.request({
+                url: app.globalData.url+'fav/list',
+                data: { openid : app.globalData.openid, sig : app.globalData.sig },
+                method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },// 设置请求的 header
+                success: function (res) {
+                    console.log(res.data)
+                    self.setData({
+                        postsList:res.data
+                    });
+                },
+                fail: function () {
+                    console.log("index.js wx.request CheckCallUser fail");
+                },
+                complete: function () {
+                    // complete
+                }
+            })
+        }
+    },
+    deleteFavorite:function (e) {
+      console.log(e)
+        wx.request({
+            url: app.globalData.url+'fav/'+e.currentTarget.id,
+            data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
+            method: 'DELETE', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },// 设置请求的 header
+            success: function (res) {
+                console.log(res.statusCode)
+                if (res.statusCode == 200||res.statusCode == 202) {
+                    wx.showToast({
+                        title:'取消成功',
+                        icon:'success',
+                        duration:2000
+                    })
 
+                } else if(res.statusCode == 409) {
+                    console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
+                    wx.showToast({
+                        title: '重复添加',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function () {
+                console.log("index.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+
+            }
+        })
+
+        this.onShow()
+    },
+  getUserInfo: function (e) {
+    // console.log(e)
+      app.globalData.isGetUserInfo = true
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+      console.log(app.globalData.openid, app.globalData.sig);
+      wx.request({
+          url: app.globalData.url+'fav/list',
+          data: { openid : app.globalData.openid, sig : app.globalData.sig },
+          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+          header: {
+              'content-type': 'application/x-www-form-urlencoded'
+          },// 设置请求的 header
+          success: function (res) {
+              console.log(res.data)
+              self.setData({
+                  postsList:res.data
+              });
+          },
+          fail: function () {
+              console.log("index.js wx.request CheckCallUser fail");
+          },
+          complete: function () {
+              // complete
+          }
+      })
+  },
   onReady: function () {
     var self = this;   
     Auth.checkSession(self,'isLoginNow');
@@ -115,12 +228,11 @@ Page({
     wx.reLaunch({
         url: '../index/index'
       })
-
   },
   clear:function(e)
   {
 
-    Auth.logout(this); 
+    Auth.logout(this);
 
   },
 
@@ -136,7 +248,7 @@ Page({
     }
     else
     {
-        url = '../detail/detail?id=' + id;
+        url = '../detailFavorite/detailFavorite?id=' + id;
 
     }
       

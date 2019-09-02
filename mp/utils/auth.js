@@ -217,6 +217,7 @@ Auth.logout=function(appPage){
         userLevel:{},
         userInfo:{},
         wxLoginInfo:{}
+        // hasUserInfo: false
         }
     )
     wx.removeStorageSync('userInfo');

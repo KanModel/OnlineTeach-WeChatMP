@@ -95,7 +95,7 @@
   /*margin-left: 200rpx;*/
     text-align: center;
   font-size: 100px;
-  height: 80rpx;
+  height: 100rpx;
   margin-bottom: 20rpx;
     padding-top: 10px   ;
 }

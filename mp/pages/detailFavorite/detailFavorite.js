@@ -81,7 +81,6 @@ Page({
 
     },
     onLoad: function (options) {
-
         var self=this;
         self.setData({
             id:options.id
@@ -99,11 +98,10 @@ Page({
         new ModalView;
     },
     postFavorite:function () {
-    if(app.globalData.isGetUserInfo){
         wx.request({
             url: app.globalData.url+'fav/'+this.data.id,
             data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
-            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            method: 'DELETE', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
             header: {
                 'content-type': 'application/x-www-form-urlencoded'
             },// 设置请求的 header
@@ -111,16 +109,17 @@ Page({
                 console.log(res.statusCode)
                 if (res.statusCode == 200||res.statusCode == 202) {
                     wx.showToast({
-                        title:'添加成功',
+                        title:'取消成功',
                         icon:'success',
                         duration:2000
                     })
-                } else if(res.statusCode == 409){
+
+                } else if(res.statusCode == 409) {
                     console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
                     wx.showToast({
-                        title:'重复添加',
-                        icon:'none',
-                        duration:2000
+                        title: '重复添加',
+                        icon: 'none',
+                        duration: 2000
                     })
                 }
             },
@@ -128,16 +127,9 @@ Page({
                 console.log("index.js wx.request CheckCallUser fail");
             },
             complete: function () {
-                // complete
+
             }
         })
-    }else{
-        wx.showToast({
-            title:'请先登录',
-            icon:'none',
-            duration:2000
-        })
-    }
     },
     showLikeImg: function () {
         var self = this;

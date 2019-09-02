@@ -17,14 +17,14 @@
 <view class="readlog-container">
 
   <view class="usertool">
-    <image class="usertool-img" src="../../images/exit.png" catchtap="exit"></image>
+    <!--<image class="usertool-img" src="../../images/exit.png" catchtap="exit"></image>-->
    
   </view>
 
   <view class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
 
-    <block wx:if="{{openid !=''}}">
+    <block wx:if="{{!hasUserInfo && canIUse}}">
       <view class='userinfo_text_box'>
         <text class="userinfo_nickname">{{userInfo.nickName}}</text>
         <view class='userinfo_des_box'>
@@ -39,39 +39,70 @@
         </view>
 
       </view>
+    </block> -->
+ <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+    <block wx:else>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname" style="margin-left: 20px">{{userInfo.nickName}}</text>
     </block>
-
   </view>
 
 
 
   <view class="top-bar">
-    <block wx:for="{{topBarItems}}" wx:key="id">
-      <view class="top-bar-item {{item.selected ? 'top-bar-item-Selected': '' }}" catchtap="onTapTag" id="{{item.id}}">{{item.name}}</view>
+    <block>
+      <button class="top-bar-item {{item.selected ? 'top-bar-item-Selected': '' }}">用户收藏</button>
     </block>
   </view>
-  <view class="list_container">
-    <view class="showerror" style="display:{{showerror}}">
-      <image src="../../images/cry80.png" style="height:100rpx;width:100rpx"></image>
-      <view class="errortext">
-        暂时无法访问网络
-       
-      </view>
-    </view>
-    <template is="login-popup" data="{{show: isLoginPopup, userInfo: userInfo}}"></template>
+  <view class="common-list">
+      <block wx:key="id" wx:for="{{postsList}}">
+          <view class="list-item has-img" index="{{index}}" id="{{item.post.id}}" bindtap="redictDetail"
+          style="width: 100%;justify-content: space-between;">
+              <view class="content-title">
+                  <text>{{item.post.title}}</text>
+              </view>
 
-    <view class="log-list">
-      <block wx:key="id" wx:for="{{readLogs}}">
-        <view class="log-items" index="{{index}}" id="{{item[0]}}" data-itemtype="{{item[2]}}" catchtap="redictDetail">
-          <text class="log-text">{{index + 1}}. {{item[1]}}</text>
-        </view>
+              <view class="content-date"style="display: flex">
+                  <image src="../../images/calendar.png"></image>
+                  <text>{{item.post.createdTime}}</text>
+                  <view>{{br}}</view>
+                  <image src="../../images/comments.png"></image>
+                  <text class="">{{item.post.short}}</text>
+                  <!--<image src="../../images/pageviews.png"></image>-->
+                  <!--<text class="">{{item.pageviews}}</text>-->
+                  <!--<image src="../../images/home-like.png"></image>-->
+                  <!--<text class="">{{item.like_count}}</text>        -->
+                  <view>
+                      <button style="font-size: 14px;width: 100px;height: 35px;right: 25px;position: absolute;bottom: 5px"
+                              catchtap="deleteFavorite" id="{{item.post.id}}">取消收藏</button>
+                  </view>
+              </view>
+
+              <!-- <image src="{{item.post_medium_image}}" mode="aspectFill" class="cover"></image> -->
+          </view>
+
       </block>
-      <view class="log-items" style="display:{{shownodata}}">
-        <text class="log_tips">没有相关文章！</text>
-      </view>
-    </view>
-    <view class="copyright" style="display:{{floatDisplay}}">
-      <template is="tempCopyright" />
-    </view>
+      <!--<view class="showerror" style="display:{{showerror}}">-->
+      <!--<image src="../../images/cry80.png" style="height:100rpx;width:100rpx"></image>-->
+      <!--<view class="errortext">-->
+        <!--暂时无法访问网络-->
+
+      <!--</view>-->
+    <!--</view>-->
+    <!--<template is="login-popup" data="{{show: isLoginPopup, userInfo: userInfo}}"></template>-->
+
+    <!--<view class="log-list">-->
+      <!--<block wx:key="id" wx:for="{{readLogs}}">-->
+        <!--<view class="log-items" index="{{index}}" id="{{item[0]}}" data-itemtype="{{item[2]}}" catchtap="redictDetail">-->
+          <!--<text class="log-text">{{index + 1}}. {{item[1]}}</text>-->
+        <!--</view>-->
+      <!--</block>-->
+      <!--<view class="log-items" style="display:{{shownodata}}">-->
+        <!--<text class="log_tips">没有相关文章！</text>-->
+      <!--</view>-->
+    <!--</view>-->
+    <!--<view class="copyright" style="display:{{floatDisplay}}">-->
+      <!--<template is="tempCopyright" />-->
+    <!--</view>-->
   </view>
 </view>

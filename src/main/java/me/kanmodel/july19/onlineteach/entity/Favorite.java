@@ -42,6 +42,7 @@ public class Favorite {
     public Favorite(Post post, Timestamp time) {
         this.post = post;
         this.time = time;
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() {

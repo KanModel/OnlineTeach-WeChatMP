@@ -11,8 +11,6 @@
 const Towxml = require('/towxml/main');     //引入towxml库
 
 App({
-
-
     globalData: {
         userInfo: null,
         openid: '',
@@ -28,8 +26,6 @@ App({
         wx.setStorageSync('logs', logs)
         // 小程序主动更新
         this.updateManager();
-
-
     },
     towxml: new Towxml(),
     getUserInfo: function (cb) {
@@ -42,13 +38,16 @@ App({
                 success: function () {
                     wx.getUserInfo({
                         success: function (res) {
+                            console.log(res)
                             that.globalData.userInfo = res.userInfo
                             typeof cb == "function" && cb(that.globalData.userInfo)
                         }
                     })
+                    that.isGetUserInfo = true
                 }
             })
         }
+
     },/*小程序主动更新
     */
     updateManager() {
