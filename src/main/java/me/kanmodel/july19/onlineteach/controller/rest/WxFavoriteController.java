@@ -62,7 +62,7 @@ public class WxFavoriteController {
         wxFavoriteRepository.save(favorite);
         wxUserInfoRepository.save(userInfo);
 
-        return new ResponseEntity<>(favorite, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(favorite, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{postid}", method = RequestMethod.GET)
@@ -79,7 +79,7 @@ public class WxFavoriteController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(wxFavoriteRepository.findByOpenidAndPost(openid, postRepository.findById(postid).get())
-                , HttpStatus.ACCEPTED);
+                , HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{postid}", method = RequestMethod.DELETE)
@@ -100,9 +100,10 @@ public class WxFavoriteController {
             wxFavoriteRepository.delete(favorite);
         }else {
             logger.warn("deleteFavorite:不存在对应收藏");
+            return new ResponseEntity<>(null, HttpStatus.METHOD_NOT_ALLOWED);
         }
 
-        return new ResponseEntity<>(favorite, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(favorite, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -117,6 +118,6 @@ public class WxFavoriteController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(wxFavoriteRepository.findAllByOpenid(openid)
-                , HttpStatus.ACCEPTED);
+                , HttpStatus.OK);
     }
 }
