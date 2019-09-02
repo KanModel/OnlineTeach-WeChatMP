@@ -11,6 +11,8 @@ import me.kanmodel.july19.onlineteach.entity.Post;
 import me.kanmodel.july19.onlineteach.entity.wx.WxFavorite;
 import me.kanmodel.july19.onlineteach.entity.wx.WxUserInfo;
 import me.kanmodel.july19.onlineteach.service.WxValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/fav")
 public class WxFavoriteController {
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private WxValidator wxValidator;
     @Autowired
@@ -87,13 +90,17 @@ public class WxFavoriteController {
             @ApiImplicitParam(name = "postid", value = "内容ID", required = true, paramType = "Long")
     })
     private ResponseEntity<WxFavorite> deleteFavorite(String openid,
-                                                   String sig,
-                                                   @PathVariable Long postid) {
+                                                      String sig,
+                                                      @PathVariable Long postid) {
         if (!wxValidator.valid(openid, sig))
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
         WxFavorite favorite = wxFavoriteRepository.findByOpenidAndPost(openid, postRepository.findById(postid).get());
-        wxFavoriteRepository.delete(favorite);
+        if (favorite != null) {
+            wxFavoriteRepository.delete(favorite);
+        }else {
+            logger.warn("deleteFavorite:不存在对应收藏");
+        }
 
         return new ResponseEntity<>(favorite, HttpStatus.ACCEPTED);
     }

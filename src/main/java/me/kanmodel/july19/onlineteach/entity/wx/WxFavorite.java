@@ -22,6 +22,7 @@ public class WxFavorite {
     public WxFavorite(Post post, String openid) {
         this.post = post;
         this.openid = openid;
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public WxFavorite() {
