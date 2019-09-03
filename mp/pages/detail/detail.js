@@ -82,31 +82,38 @@ Page({
     },
     onLoad: function (options) {
         var that = this;
-        wx.request({
-            url: app.globalData.url + 'fav/'+options.id,
-            method: "GET",
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :options.id},
-            success: function (res) {
-                if (res.data){
-                    that.setData({
-                        detailTo :1,
-                    })
-                }else{
-                    that.setData({
-                        detailTo :0,
-                    })
+        if(app.globalData.isGetUserInfo){
+            wx.request({
+                url: app.globalData.url + 'fav/'+options.id,
+                method: "GET",
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :options.id},
+                success: function (res) {
+                    if (res.data){
+                        that.setData({
+                            detailTo :1,
+                        })
+                    }else{
+                        that.setData({
+                            detailTo :0,
+                        })
+                    }
+                },
+                fail: function () {
+                    console.log("index.js wx.request CheckCallUser fail");
+                },
+                complete: function () {
+                    // complete
                 }
-            },
-            fail: function () {
-                console.log("index.js wx.request CheckCallUser fail");
-            },
-            complete: function () {
-                // complete
-            }
-        })
+            })
+        }else{
+            that.setData({
+                detailTo :0,
+            })
+        }
+
         var self=this;
         self.setData({
             id:options.id,
