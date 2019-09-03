@@ -113,7 +113,6 @@ Page({
     },
     onShow: function (options) {
         wx.setStorageSync('openLinkCount', 0);
-        console.log(app.globalData.isGetUserInfo)
     },
 
     //获取文章列表数据

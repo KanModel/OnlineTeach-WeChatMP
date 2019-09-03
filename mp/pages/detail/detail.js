@@ -12,6 +12,7 @@
 
 
 import config from '../../utils/config.js'
+
 var Api = require('../../utils/api.js');
 var util = require('../../utils/util.js');
 var Auth = require('../../utils/auth.js');
@@ -25,7 +26,7 @@ var app = getApp();
 let isFocusing = false
 const pageCount = config.getPageCount;
 
-import { ModalView } from '../../templates/modal-view/modal-view.js'
+import {ModalView} from '../../templates/modal-view/modal-view.js'
 import Poster from '../../templates/components/wxa-plugin-canvas-poster/poster/poster';
 
 
@@ -33,7 +34,7 @@ Page({
     data: {
         title: '文章内容',
         detail: {},
-        id:0,
+        id: 0,
         commentsList: [],
         ChildrenCommentsList: [],
         commentCount: '',
@@ -41,7 +42,7 @@ Page({
         commentValue: '',
         wxParseData: {},
         display: 'none',
-        showerror:'none',
+        showerror: 'none',
         page: 1,
         isLastPage: false,
         parentID: "0",
@@ -71,33 +72,33 @@ Page({
         flag: 1,
         logo: config.getLogo,
         enableComment: true,
-        isLoading:false,
-        total_comments:0,        
-        isLoginPopup:false,
-        openid:"",
-        userInfo:{},
-        system:'',
-        downloadFileDomain:config.getDownloadFileDomain,
-        detailTo:0,
+        isLoading: false,
+        total_comments: 0,
+        isLoginPopup: false,
+        openid: "",
+        userInfo: {},
+        system: '',
+        downloadFileDomain: config.getDownloadFileDomain,
+        detailTo: 0,
     },
     onLoad: function (options) {
         var that = this;
-        if(app.globalData.isGetUserInfo){
+        if (app.globalData.userInfo != null) {
             wx.request({
-                url: app.globalData.url + 'fav/'+options.id,
+                url: app.globalData.url + 'fav/' + options.id,
                 method: "GET",
                 header: {
                     'content-type': 'application/x-www-form-urlencoded'
                 },
-                data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :options.id},
+                data: {openid: app.globalData.openid, sig: app.globalData.sig, postid: options.id},
                 success: function (res) {
-                    if (res.data){
+                    if (res.data) {
                         that.setData({
-                            detailTo :1,
+                            detailTo: 1,
                         })
-                    }else{
+                    } else {
                         that.setData({
-                            detailTo :0,
+                            detailTo: 0,
                         })
                     }
                 },
@@ -108,135 +109,134 @@ Page({
                     // complete
                 }
             })
-        }else{
+        } else {
             that.setData({
-                detailTo :0,
+                detailTo: 0,
             })
         }
 
-        var self=this;
+        var self = this;
         self.setData({
-            id:options.id,
+            id: options.id,
         })
         self.getEnableComment();
-        self.fetchDetailData(options.id);        
-        Auth.setUserInfoData(self); 
+        self.fetchDetailData(options.id);
+        Auth.setUserInfoData(self);
         Auth.checkLogin(self);
         wx.getSystemInfo({
-            success: function (t) {           
-            var system = t.system.indexOf('iOS') != -1 ? 'iOS' : 'Android';
-            self.setData({ system: system });
-          }
+            success: function (t) {
+                var system = t.system.indexOf('iOS') != -1 ? 'iOS' : 'Android';
+                self.setData({system: system});
+            }
         })
         new ModalView;
     },
-    postFavorite:function () {
-        console.log(this.data.detailTo)
-        var self=this;
+    postFavorite: function () {
+        console.log('postFav', app.globalData.userInfo, app.globalData.isGetUserInfo, this.data.detailTo)
+        var self = this;
         var that = this;
-    if(app.globalData.isGetUserInfo&&that.data.detailTo==0){
-        wx.request({
-            url: app.globalData.url+'fav/'+this.data.id,
-            data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
-            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },// 设置请求的 header
-            success: function (res) {
-                console.log(res.statusCode)
-                if (res.statusCode == 200||res.statusCode == 202) {
-                    wx.showToast({
-                        title:'添加成功',
-                        icon:'success',
-                        duration:2000
-                    })
-                    // setTimeout(function(){
-                    //     wx.navigateBack({
-                    //     })
-                    // },2000)
-                    self.setData({
-                        detailTo:1
-                    })
-                } else if(res.statusCode == 409){
-                    console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
-                    wx.showToast({
-                        title:'重复添加',
-                        icon:'none',
-                        duration:2000
-                    })
-                    // setTimeout(function(){
-                    //     wx.navigateBack({
-                    //     })
-                    // },2000)
+        if (app.globalData.userInfo != null && that.data.detailTo === 0) {
+            wx.request({
+                url: app.globalData.url + 'fav/' + this.data.id,
+                data: {openid: app.globalData.openid, sig: app.globalData.sig, postid: this.data.id},
+                method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },// 设置请求的 header
+                success: function (res) {
+                    console.log(res.statusCode)
+                    if (res.statusCode == 200 || res.statusCode == 202) {
+                        wx.showToast({
+                            title: '添加成功',
+                            icon: 'success',
+                            duration: 2000
+                        })
+                        // setTimeout(function(){
+                        //     wx.navigateBack({
+                        //     })
+                        // },2000)
+                        self.setData({
+                            detailTo: 1
+                        })
+                    } else if (res.statusCode == 409) {
+                        console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
+                        wx.showToast({
+                            title: '重复添加',
+                            icon: 'none',
+                            duration: 2000
+                        })
+                        // setTimeout(function(){
+                        //     wx.navigateBack({
+                        //     })
+                        // },2000)
+                    }
+                },
+                fail: function () {
+                    console.log("index.js wx.request CheckCallUser fail");
+                },
+                complete: function () {
+                    // complete
                 }
-            },
-            fail: function () {
-                console.log("index.js wx.request CheckCallUser fail");
-            },
-            complete: function () {
-                // complete
-            }
-        })
-    }else if(app.globalData.isGetUserInfo&&that.data.detailTo==1){
-        wx.request({
-            url: app.globalData.url+'fav/'+this.data.id,
-            data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
-            method: 'DELETE', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },// 设置请求的 header
-            success: function (res) {
-                console.log(res.statusCode)
-                if (res.statusCode == 200||res.statusCode == 202) {
-                    wx.showToast({
-                        title:'取消成功',
-                        icon:'success',
-                        duration:2000
-                    })
-                    self.setData({
-                        detailTo:0
-                    })
-                    // setTimeout(function(){
-                    //     wx.navigateBack({
-                    //     })
-                    // },2000)
-                } else if(res.statusCode == 409) {
-                    console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
-                    wx.showToast({
-                        title: '重复添加',
-                        icon: 'none',
-                        duration: 2000
-                    })
-                    // setTimeout(function(){
-                    //     wx.navigateBack({
-                    //     })
-                    // },2000)
-                }
-            },
-            fail: function () {
-                console.log("index.js wx.request CheckCallUser fail");
-            },
-            complete: function () {
+            })
+        } else if (app.globalData.userInfo != null && that.data.detailTo === 1) {
+            wx.request({
+                url: app.globalData.url + 'fav/' + this.data.id,
+                data: {openid: app.globalData.openid, sig: app.globalData.sig, postid: this.data.id},
+                method: 'DELETE', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },// 设置请求的 header
+                success: function (res) {
+                    console.log(res.statusCode)
+                    if (res.statusCode == 200 || res.statusCode == 202) {
+                        wx.showToast({
+                            title: '取消成功',
+                            icon: 'success',
+                            duration: 2000
+                        })
+                        self.setData({
+                            detailTo: 0
+                        })
+                        // setTimeout(function(){
+                        //     wx.navigateBack({
+                        //     })
+                        // },2000)
+                    } else if (res.statusCode == 409) {
+                        console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
+                        wx.showToast({
+                            title: '重复添加',
+                            icon: 'none',
+                            duration: 2000
+                        })
+                        // setTimeout(function(){
+                        //     wx.navigateBack({
+                        //     })
+                        // },2000)
+                    }
+                },
+                fail: function () {
+                    console.log("index.js wx.request CheckCallUser fail");
+                },
+                complete: function () {
 
-            }
-        })
-    }
-    else{
-        wx.showToast({
-            title:'请先登录',
-            icon:'none',
-            duration:2000
-        })
-    }
+                }
+            })
+        } else {
+            wx.showToast({
+                title: '请先登录',
+                icon: 'none',
+                duration: 2000
+            })
+        }
     },
     showLikeImg: function () {
         var self = this;
         var flag = false;
         var _likes = self.data.detail.avatarurls;
-        if(!_likes){
+        if (!_likes) {
             return;
         }
-        
+
         var likes = [];
         for (var i = 0; i < _likes.length; i++) {
             var avatarurl = "../../images/gravatar.png";
@@ -250,20 +250,18 @@ Page({
             likeList: likes
         });
     },
-    onReachBottom: function () { 
+    onReachBottom: function () {
         var self = this;
-        if (!self.data.isLastPage) {            
-            console.log('当前页' + self.data.page);            
+        if (!self.data.isLastPage) {
+            console.log('当前页' + self.data.page);
             self.fetchCommentData();
             self.setData({
-                page: self.data.page + 1,                
-            });            
-        }
-        else
-        {            
+                page: self.data.page + 1,
+            });
+        } else {
             console.log('评论已经是最后一页了');
         }
-      
+
     },
     onShareAppMessage: function (res) {
         this.ShowHideMenu();
@@ -292,8 +290,7 @@ Page({
             wx.navigateTo({
                 url: url + '?url=' + self.data.link
             })
-        }
-        else {
+        } else {
             self.copyLink(self.data.link);
         }
 
@@ -333,7 +330,7 @@ Page({
                 .then(response => {
                     if (response.data.status == '200') {
                         var _likeList = []
-                         var _like = self.data.userInfo.avatarUrl;
+                        var _like = self.data.userInfo.avatarUrl;
                         _likeList.push(_like);
                         var tempLikeList = _likeList.concat(self.data.likeList);
                         var _likeCount = parseInt(self.data.likeCount) + 1;
@@ -349,8 +346,7 @@ Page({
                             success: function () {
                             }
                         })
-                    }
-                    else if (response.data.status == '501') {
+                    } else if (response.data.status == '501') {
                         console.log(response.data.message);
                         wx.showToast({
                             title: '谢谢，已赞过',
@@ -359,8 +355,7 @@ Page({
                             success: function () {
                             }
                         })
-                    }
-                    else {
+                    } else {
                         console.log(response.data.message);
 
                     }
@@ -368,10 +363,9 @@ Page({
                         likeImag: "like-on.png"
                     });
                 })
-        }
-        else {
-            Auth.checkSession(self,'isLoginNow');
-            
+        } else {
+            Auth.checkSession(self, 'isLoginNow');
+
         }
     },
     getIslike: function () { //判断当前用户是否点赞
@@ -407,19 +401,17 @@ Page({
         this.ShowHideMenu();
         var self = this;
         var minAppType = config.getMinAppType;
-        var system  =self.data.system;
-        if (minAppType == "0" && system=='Android') {
+        var system = self.data.system;
+        if (minAppType == "0" && system == 'Android') {
             if (self.data.openid) {
 
                 wx.navigateTo({
                     url: '../pay/pay?flag=1&openid=' + self.data.openid + '&postid=' + self.data.postID
                 })
+            } else {
+                Auth.checkSession(self, 'isLoginNow');
             }
-            else {
-                Auth.checkSession(self,'isLoginNow');
-            }
-        }
-        else {
+        } else {
 
             var src = config.getZanImageUrl;
             wx.previewImage({
@@ -440,14 +432,14 @@ Page({
                         self.setData({
                             enableComment: true
                         });
-                    }
-                    else {
+                    } else {
                         self.setData({
                             enableComment: false
                         });
                     }
 
-                };
+                }
+                ;
 
             });
     },
@@ -473,7 +465,7 @@ Page({
                 wx.setNavigationBarTitle({
                     title: res.data.title
                 });
-                let data = app.towxml.toJson(res.data.content ,'markdown');
+                let data = app.towxml.toJson(res.data.content, 'markdown');
 
                 //设置数据
                 self.setData({
@@ -522,53 +514,53 @@ Page({
                 //end */
 
             })
-            /*.then(response => {
+        /*.then(response => {
 
-            })
-            .then(response => {
-                var tagsArr = [];
-                tagsArr = res.data.tags
-                if(!tagsArr)
-                {
-                    return false;
+        })
+        .then(response => {
+            var tagsArr = [];
+            tagsArr = res.data.tags
+            if(!tagsArr)
+            {
+                return false;
+            }
+            var tags = "";
+            for (var i = 0; i < tagsArr.length; i++) {
+                if (i == 0) {
+                    tags += tagsArr[i];
                 }
-                var tags = "";
-                for (var i = 0; i < tagsArr.length; i++) {
-                    if (i == 0) {
-                        tags += tagsArr[i];
-                    }
-                    else {
-                        tags += "," + tagsArr[i];
-
-                    }
-                }
-                if (tags != "") {
-                    var getPostTagsRequest = wxRequest.getRequest(Api.getPostsByTags(id, tags));
-                    getPostTagsRequest
-                        .then(response => {
-                            self.setData({
-                                postList: response.data
-                            });
-
-                        })
+                else {
+                    tags += "," + tagsArr[i];
 
                 }
-            }).then(response => {//获取点赞记录
-                self.showLikeImg();
-            }).then(resonse => {
-                if (self.data.openid) {
-                   Auth.checkSession(self,'isLoginLater');
-                }
+            }
+            if (tags != "") {
+                var getPostTagsRequest = wxRequest.getRequest(Api.getPostsByTags(id, tags));
+                getPostTagsRequest
+                    .then(response => {
+                        self.setData({
+                            postList: response.data
+                        });
 
-            }).then(response => {//获取是否已经点赞
-                if (self.data.openid) {
-                    self.getIslike();
-                }
-            })
-            .catch(function (error) {
-               console.log('error: ' + error);
+                    })
 
-            })*/
+            }
+        }).then(response => {//获取点赞记录
+            self.showLikeImg();
+        }).then(resonse => {
+            if (self.data.openid) {
+               Auth.checkSession(self,'isLoginLater');
+            }
+
+        }).then(response => {//获取是否已经点赞
+            if (self.data.openid) {
+                self.getIslike();
+            }
+        })
+        .catch(function (error) {
+           console.log('error: ' + error);
+
+        })*/
     },
     //给a标签添加跳转和复制链接事件
     wxParseTagATap: function (e) {
@@ -593,15 +585,13 @@ Page({
                     })
                 }
             })
-        }
-        else {
+        } else {
             var slug = util.GetUrlFileName(href, domain);
             if (slug == 'index') {
                 wx.switchTab({
                     url: '../index/index'
                 })
-            }
-            else {
+            } else {
                 var getPostSlugRequest = wxRequest.getRequest(Api.getPostBySlug(slug));
                 getPostSlugRequest
                     .then(res => {
@@ -613,16 +603,14 @@ Page({
                                     wx.redirectTo({
                                         url: '../detail/detail?id=' + postID
                                     })
-                                }
-                                else {
+                                } else {
                                     wx.navigateTo({
                                         url: '../detail/detail?id=' + postID
                                     })
                                     openLinkCount++;
                                     wx.setStorageSync('openLinkCount', openLinkCount);
                                 }
-                            }
-                            else {
+                            } else {
                                 var minAppType = config.getMinAppType;
                                 var url = '../webpage/webpage'
                                 if (minAppType == "0") {
@@ -630,8 +618,7 @@ Page({
                                     wx.navigateTo({
                                         url: url + '?url=' + href
                                     })
-                                }
-                                else {
+                                } else {
                                     self.copyLink(href);
                                 }
 
@@ -641,20 +628,20 @@ Page({
                         }
 
                     }).catch(res => {
-                        console.log(response.data.message);
-                    })
+                    console.log(response.data.message);
+                })
             }
         }
 
     },
     //获取评论
     fetchCommentData: function () {
-        var self=this;
+        var self = this;
         let args = {};
         args.postId = self.data.postID;
         args.limit = pageCount;
         args.page = self.data.page;
-        self.setData({ isLoading: true })
+        self.setData({isLoading: true})
         var getCommentsRequest = wxRequest.getRequest(Api.getCommentsReplay(args));
         getCommentsRequest
             .then(response => {
@@ -665,24 +652,24 @@ Page({
                         });
                     }
                     if (response.data) {
-                        self.setData({                            
+                        self.setData({
                             commentsList: [].concat(self.data.commentsList, response.data.data)
                         });
                     }
 
                 }
 
-            }) 
+            })
             .catch(response => {
                 console.log(response.data.message);
-                
+
             }).finally(function () {
 
-                self.setData({
-                    isLoading: false
-                });
+            self.setData({
+                isLoading: false
+            });
 
-            });     
+        });
     },
     //显示或隐藏功能菜单
     ShowHideMenu: function () {
@@ -708,8 +695,7 @@ Page({
             });
             console.log('当前页' + self.data.page);
             this.fetchCommentData();
-        }
-        else {
+        } else {
             wx.showToast({
                 title: '没有更多内容',
                 mask: false,
@@ -725,8 +711,7 @@ Page({
         var toFromId = e.target.dataset.formid;
         var commentdate = e.target.dataset.commentdate;
         isFocusing = true;
-        if (self.data.enableComment=="1")
-        {
+        if (self.data.enableComment == "1") {
             self.setData({
                 parentID: id,
                 placeholder: "回复" + name + ":",
@@ -736,13 +721,13 @@ Page({
                 commentdate: commentdate
             });
 
-        }        
-       // console.log('toFromId', toFromId);
-       // console.log('replay', isFocusing);
+        }
+        // console.log('toFromId', toFromId);
+        // console.log('replay', isFocusing);
     },
     onReplyBlur: function (e) {
         var self = this;
-       // console.log('onReplyBlur', isFocusing);
+        // console.log('onReplyBlur', isFocusing);
         if (!isFocusing) {
             {
                 const text = e.detail.value.trim();
@@ -758,14 +743,14 @@ Page({
 
             }
         }
-       // console.log(isFocusing);
+        // console.log(isFocusing);
     },
     onRepleyFocus: function (e) {
         var self = this;
         isFocusing = false;
         //console.log('onRepleyFocus', isFocusing);
         if (!self.data.focus) {
-            self.setData({ focus: true })
+            self.setData({focus: true})
         }
 
 
@@ -777,9 +762,8 @@ Page({
         var parent = self.data.parentID;
         var postID = e.detail.value.inputPostID;
         var formId = e.detail.formId;
-        if(formId =="the formId is a mock one")
-        {
-            formId="";
+        if (formId == "the formId is a mock one") {
+            formId = "";
 
         }
         var userid = self.data.userid;
@@ -792,14 +776,13 @@ Page({
                 'dialog.content': '没有填写评论内容。'
 
             });
-        }
-        else {
+        } else {
             if (self.data.openid) {
                 var name = self.data.userInfo.nickName;
                 var author_url = self.data.userInfo.avatarUrl;
                 var email = self.data.openid + "@qq.com";
                 var openid = self.data.openid;
-                var fromUser = self.data.userInfo.nickName;                
+                var fromUser = self.data.userInfo.nickName;
                 var data = {
                     post: postID,
                     author_name: name,
@@ -813,7 +796,7 @@ Page({
                 };
                 var url = Api.postWeixinComment();
                 var postCommentRequest = wxRequest.postRequest(url, data);
-                var postCommentMessage="";
+                var postCommentMessage = "";
                 postCommentRequest
                     .then(res => {
                         console.log(res)
@@ -827,10 +810,10 @@ Page({
                                     focus: false,
                                     commentsList: []
 
-                                });                                
-                                postCommentMessage=res.data.message;
+                                });
+                                postCommentMessage = res.data.message;
                                 if (parent != "0" && !util.getDateOut(commentdate) && toFromId != "") {
-                                    var useropenid = res.data.useropenid;                                    
+                                    var useropenid = res.data.useropenid;
                                     var data =
                                         {
                                             openid: useropenid,
@@ -848,23 +831,21 @@ Page({
                                     sendMessageRequest.then(response => {
                                         if (response.data.status == '200') {
                                             //console.log(response.data.message);
-                                        }
-                                        else {
+                                        } else {
                                             console.log(response.data.message);
 
                                         }
 
                                     });
 
-                                }                               
-                                var commentCounts = parseInt(self.data.total_comments)+1;                                
+                                }
+                                var commentCounts = parseInt(self.data.total_comments) + 1;
                                 self.setData({
-                                    total_comments:commentCounts,                                   
-                                    commentCount: "有" + commentCounts + "条评论"                                   
-                                    
-                                    });                                                              
-                            }
-                            else if (res.data.status == '500') {
+                                    total_comments: commentCounts,
+                                    commentCount: "有" + commentCounts + "条评论"
+
+                                });
+                            } else if (res.data.status == '500') {
                                 self.setData({
                                     'dialog.hidden': false,
                                     'dialog.title': '提示',
@@ -872,8 +853,7 @@ Page({
 
                                 });
                             }
-                        }
-                        else {
+                        } else {
 
                             if (res.data.code == 'rest_comment_login_required') {
                                 self.setData({
@@ -882,16 +862,14 @@ Page({
                                     'dialog.content': '需要开启在WordPress rest api 的匿名评论功能！'
 
                                 });
-                            }
-                            else if (res.data.code == 'rest_invalid_param' && res.data.message.indexOf('author_email') > 0) {
+                            } else if (res.data.code == 'rest_invalid_param' && res.data.message.indexOf('author_email') > 0) {
                                 self.setData({
                                     'dialog.hidden': false,
                                     'dialog.title': '提示',
                                     'dialog.content': 'email填写错误！'
 
                                 });
-                            }
-                            else {
+                            } else {
                                 console.log(res)
                                 self.setData({
                                     'dialog.hidden': false,
@@ -901,56 +879,55 @@ Page({
                                 });
                             }
                         }
-                    }).then(response =>{                    
-                        //self.fetchCommentData(self.data); 
-                        self.setData(
-                            {
-                                page:1,
-                                commentsList:[],
-                                isLastPage:false
+                    }).then(response => {
+                    //self.fetchCommentData(self.data);
+                    self.setData(
+                        {
+                            page: 1,
+                            commentsList: [],
+                            isLastPage: false
 
+                        }
+                    )
+                    self.onReachBottom();
+                    //self.fetchCommentData();
+                    setTimeout(function () {
+                        wx.showToast({
+                            title: postCommentMessage,
+                            icon: 'none',
+                            duration: 900,
+                            success: function () {
                             }
-                        )
-                        self.onReachBottom();
-                        //self.fetchCommentData();
-                        setTimeout(function () {                           
-                            wx.showToast({
-                                title: postCommentMessage,
-                                icon: 'none',
-                                duration: 900,
-                                success: function () {
-                                }
-                            })                            
-                        }, 900); 
-                    }).catch(response => {
-                        console.log(response)
-                        self.setData({
-                            'dialog.hidden': false,
-                            'dialog.title': '提示',
-                            'dialog.content': '评论失败,' + response
+                        })
+                    }, 900);
+                }).catch(response => {
+                    console.log(response)
+                    self.setData({
+                        'dialog.hidden': false,
+                        'dialog.title': '提示',
+                        'dialog.content': '评论失败,' + response
 
-                        });
-                    })
-            }
-            else {
-                Auth.checkSession(self,'isLoginNow');                
+                    });
+                })
+            } else {
+                Auth.checkSession(self, 'isLoginNow');
 
             }
 
         }
 
-    },    
-    agreeGetUser:function(e)
-    {
-       let self= this;
-        Auth.checkAgreeGetUser(e,app,self,'0');;
-        
+    },
+    agreeGetUser: function (e) {
+        let self = this;
+        Auth.checkAgreeGetUser(e, app, self, '0');
+        ;
+
     },
     closeLoginPopup() {
-        this.setData({ isLoginPopup: false });
+        this.setData({isLoginPopup: false});
     },
     openLoginPopup() {
-        this.setData({ isLoginPopup: true });
+        this.setData({isLoginPopup: true});
     },
     confirm: function () {
         this.setData({
@@ -958,7 +935,7 @@ Page({
             'dialog.title': '',
             'dialog.content': ''
         })
-    },    
+    },
     downimageTolocal: function () {
         var self = this;
         self.ShowHideMenu();
@@ -978,44 +955,39 @@ Page({
         var domain = config.getDomain;
         var downloadFileDomain = config.getDownloadFileDomain;
 
-        var fristImage = self.data.detail.post_medium_image; 
+        var fristImage = self.data.detail.post_medium_image;
 
         //获取文章首图临时地址，若没有就用默认的图片,如果图片不是request域名，使用本地图片
         if (fristImage) {
             var n = 0;
-            for (var i = 0; i < downloadFileDomain.length;i++)
-            {
-                
-                if(fristImage.indexOf(downloadFileDomain[i].domain) != -1)
-                {
-                    n++;                   
+            for (var i = 0; i < downloadFileDomain.length; i++) {
+
+                if (fristImage.indexOf(downloadFileDomain[i].domain) != -1) {
+                    n++;
                     break;
                 }
             }
-            if(n>0)
-            {
+            if (n > 0) {
                 imageInlocalFlag = false;
                 postImageUrl = fristImage;
 
-            }
-            else{
+            } else {
                 postImageUrl = config.getPostImageUrl;
                 posterImagePath = postImageUrl;
                 imageInlocalFlag = true;
             }
-            
-        }
-        else {
+
+        } else {
             postImageUrl = config.getPostImageUrl;
             posterImagePath = postImageUrl;
-            imageInlocalFlag=true;
+            imageInlocalFlag = true;
         }
 
-        console.log(postImageUrl);                   
+        console.log(postImageUrl);
         var data = {
-            postid: postid,                
-            path: path               
-            
+            postid: postid,
+            path: path
+
         };
         var url = Api.creatPoster();
         var qrcodeUrl = "";
@@ -1042,8 +1014,7 @@ Page({
                                                 if (posterImagePath && qrcodeImagePath) {
                                                     self.createPosterLocal(posterImagePath, qrcodeImagePath, title, excerpt);
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 console.log(res);
                                                 wx.hideLoading();
                                                 wx.showToast({
@@ -1061,14 +1032,12 @@ Page({
                                         console.log('下载文章图片进度：' + res.progress)
 
                                     })
-                                }
-                                else {
+                                } else {
                                     if (posterImagePath && qrcodeImagePath) {
                                         self.createPosterLocal(posterImagePath, qrcodeImagePath, title, excerpt);
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 console.log(res);
                                 //wx.hideLoading();
                                 flag = false;
@@ -1084,8 +1053,7 @@ Page({
                     downloadTaskQrcodeImage.onProgressUpdate((res) => {
                         console.log('下载二维码进度', res.progress)
                     })
-                }
-                else {
+                } else {
                     console.log(response);
                     //wx.hideLoading();
                     flag = false;
@@ -1096,8 +1064,7 @@ Page({
                     });
                     return false;
                 }
-            }
-            else {
+            } else {
                 console.log(response);
                 //wx.hideLoading();
                 flag = false;
@@ -1110,7 +1077,7 @@ Page({
             }
 
         });
-        
+
 
     },
     //将canvas转换为图片保存到本地，然后将路径传给image图片的src
@@ -1149,9 +1116,9 @@ Page({
                 canvasId: 'mycanvas',
                 success: function (res) {
                     var tempFilePath = res.tempFilePath;
-                  
+
                     wx.hideLoading();
-                    console.log("海报图片路径：" + res.tempFilePath);                    
+                    console.log("海报图片路径：" + res.tempFilePath);
                     that.modalView.showModal({
                         title: '保存至相册可以分享',
                         confirmation: false,
@@ -1178,65 +1145,62 @@ Page({
         }, 900);
     },
     onPosterSuccess(e) {
-        const { detail } = e;        
+        const {detail} = e;
         this.showModal(detail);
-      },
-      onPosterFail(err) {  
+    },
+    onPosterFail(err) {
         wx.showToast({
             title: err,
             mask: true,
             duration: 2000
         });
-      },
+    },
 
-    onCreatePoster:function() {      
-        var self = this;    
-        this.ShowHideMenu();     
+    onCreatePoster: function () {
+        var self = this;
+        this.ShowHideMenu();
         if (self.data.openid) {
-            self.creatArticlePoster(self,Api,util,self.modalView,Poster);
+            self.creatArticlePoster(self, Api, util, self.modalView, Poster);
+        } else {
+            Auth.checkSession(self, 'isLoginNow');
+
         }
-        else {
-            Auth.checkSession(self,'isLoginNow');
-                    
-        }
-        
+
     },
 
-    showModal:function(posterPath){
+    showModal: function (posterPath) {
         this.modalView.showModal({
-                    title: '保存至相册可以分享给好友',
-                    confirmation: false,
-                    confirmationText: '',
-                    inputFields: [{
-                        fieldName: 'posterImage',
-                        fieldType: 'Image',
-                        fieldPlaceHolder: '',
-                        fieldDatasource: posterPath,
-                        isRequired: false,
-                    }],
-                    confirm: function (res) {
-                        console.log(res)
-                              }
-                })
+            title: '保存至相册可以分享给好友',
+            confirmation: false,
+            confirmationText: '',
+            inputFields: [{
+                fieldName: 'posterImage',
+                fieldType: 'Image',
+                fieldPlaceHolder: '',
+                fieldDatasource: posterPath,
+                isRequired: false,
+            }],
+            confirm: function (res) {
+                console.log(res)
+            }
+        })
     },
-    
-     creatArticlePoster:function(appPage, api, util, modalView,poster)
-    {
+
+    creatArticlePoster: function (appPage, api, util, modalView, poster) {
 
         var postId = appPage.data.detail.id;
-        var title =appPage.data.detail.title.rendered;        
-        var excerpt = appPage.data.detail.excerpt.rendered?appPage.data.detail.excerpt.rendered:'';
-        if(excerpt && excerpt.length !=0 &&  excerpt !='' )
-        {
+        var title = appPage.data.detail.title.rendered;
+        var excerpt = appPage.data.detail.excerpt.rendered ? appPage.data.detail.excerpt.rendered : '';
+        if (excerpt && excerpt.length != 0 && excerpt != '') {
             excerpt = util.removeHTML(excerpt);
-        } 
+        }
 
 
         var postImageUrl = "";//海报图片地址
         var posterImagePath = "";
         var qrcodeImagePath = "";//二维码图片的地址
         var flag = false;
-        var imageInlocalFlag = false;  
+        var imageInlocalFlag = false;
         var downloadFileDomain = appPage.data.downloadFileDomain;
         var logo = appPage.data.logo;
         var defaultPostImageUrl = appPage.data.detail.postImageUrl;
@@ -1248,14 +1212,14 @@ Page({
             var n = 0;
             for (var i = 0; i < downloadFileDomain.length; i++) {
 
-            if (postImageUrl.indexOf(downloadFileDomain[i].domain) != -1) {
-                n++;
-                break;
-            }
+                if (postImageUrl.indexOf(downloadFileDomain[i].domain) != -1) {
+                    n++;
+                    break;
+                }
             }
             if (n == 0) {
-            imageInlocalFlag = true;
-            postImageUrl = defaultPostImageUrl;
+                imageInlocalFlag = true;
+                postImageUrl = defaultPostImageUrl;
 
             }
 
@@ -1267,9 +1231,9 @@ Page({
             height: 1200,
             backgroundColor: '#fff',
             debug: false
-            
+
         }
-        var blocks= [
+        var blocks = [
             {
                 width: 690,
                 height: 808,
@@ -1289,8 +1253,8 @@ Page({
                 zIndex: 100,
             }
         ]
-        var texts=[];
-        texts= [
+        var texts = [];
+        texts = [
             {
                 x: 113,
                 y: 61,
@@ -1308,7 +1272,7 @@ Page({
                 text: '发现不错的文章推荐给你',
                 fontSize: 38,
                 color: '#080808',
-            },            
+            },
             {
                 x: 59,
                 y: 770,
@@ -1319,8 +1283,8 @@ Page({
                 marginLeft: 30,
                 width: 570,
                 lineNum: 2,
-                lineHeight:50
-            },    
+                lineHeight: 50
+            },
             {
                 x: 59,
                 y: 875,
@@ -1330,7 +1294,7 @@ Page({
                 color: '#929292',
                 width: 560,
                 lineNum: 2,
-                lineHeight:50
+                lineHeight: 50
             },
             {
                 x: 350,
@@ -1341,55 +1305,54 @@ Page({
                 color: '#080808',
             }
         ];
-        
-    
-        posterConfig.blocks=blocks;//海报内图片的外框
-        posterConfig.texts=texts; //海报的文字
+
+
+        posterConfig.blocks = blocks;//海报内图片的外框
+        posterConfig.texts = texts; //海报的文字
         var url = Api.creatPoster();
         var path = "pages/detail/detail?id=" + postId;
         var data = {
-            postid: postId,                
-            path: path               
-            
+            postid: postId,
+            path: path
+
         };
         var creatPosterRequest = wxRequest.postRequest(url, data);
         creatPosterRequest.then(res => {
-            if (res.data.code=='success') {
-            qrcodeImagePath=res.data.qrcodeimgUrl;
+            if (res.data.code == 'success') {
+                qrcodeImagePath = res.data.qrcodeimgUrl;
 
 
-            var images= [
-                {
-                    width: 62,
-                    height: 62,
-                    x: 32,
-                    y: 30,
-                    borderRadius: 62,
-                    url:appPage.data.userInfo.avatarUrl, //用户头像
-                },
-                {
-                    width: 634,
-                    height: 475,
-                    x: 59,
-                    y: 210,
-                    url: postImageUrl,//海报主图
-                },
-                {
-                    width: 220,
-                    height: 220,
-                    x: 92,
-                    y: 1020,
-                    url: qrcodeImagePath,//二维码的图
-                }
-            ];
+                var images = [
+                    {
+                        width: 62,
+                        height: 62,
+                        x: 32,
+                        y: 30,
+                        borderRadius: 62,
+                        url: appPage.data.userInfo.avatarUrl, //用户头像
+                    },
+                    {
+                        width: 634,
+                        height: 475,
+                        x: 59,
+                        y: 210,
+                        url: postImageUrl,//海报主图
+                    },
+                    {
+                        width: 220,
+                        height: 220,
+                        x: 92,
+                        y: 1020,
+                        url: qrcodeImagePath,//二维码的图
+                    }
+                ];
 
-            posterConfig.images=images;//海报内的图片
-                appPage.setData({ posterConfig: posterConfig }, () => {
-                poster.create(true);    //生成海报图片
-            });
-            
-            }
-            else{            
+                posterConfig.images = images;//海报内的图片
+                appPage.setData({posterConfig: posterConfig}, () => {
+                    poster.create(true);    //生成海报图片
+                });
+
+            } else {
                 wx.showToast({
                     title: res.message,
                     mask: true,

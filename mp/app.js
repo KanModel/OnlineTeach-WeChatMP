@@ -15,8 +15,6 @@ App({
         userInfo: null,
         openid: '',
         sig: null,
-        isGetUserInfo: false,
-        isGetOpenid: false,
         url: 'http://localhost:8088/api/',
     },
     onLaunch: function () {

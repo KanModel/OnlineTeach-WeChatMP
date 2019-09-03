@@ -114,7 +114,6 @@ Page({
     getUserInfo: function (e) {
         // console.log(e)
         var that = this;
-        app.globalData.isGetUserInfo = true
         app.globalData.userInfo = e.detail.userInfo
         this.setData({
             userInfo: e.detail.userInfo,
