@@ -40,66 +40,37 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        var self = this;
-        self.fetchPostsData('1');
-        // Auth.setUserInfoData(self);
-        // Auth.checkLogin(self);
-        if (app.globalData.userInfo) {
-            this.setData({
-                userInfo: app.globalData.userInfo,
-                hasUserInfo: true
-            })
-        } else if (this.data.canIUse) {
-            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-            // 所以此处加入 callback 以防止这种情况
-            app.userInfoReadyCallback = res => {
-                this.setData({
-                    userInfo: res.userInfo,
-                    hasUserInfo: true
-                })
-            }
-        } else {
-            // 在没有 open-type=getUserInfo 版本的兼容处理
-            wx.getUserInfo({
-                success: res => {
-                    app.globalData.userInfo = res.userInfo
-                    this.setData({
-                        userInfo: res.userInfo,
-                        hasUserInfo: true
-                    })
-                }
-            })
-        }
+        console.log(app.globalData.userInfo)
+    },
+    onShow:function () {
+        console.log(app.globalData.userInfo)
+        this.resetData();
     },
     resetData(){
-        var that = this
-        console.log('resetData' ,that.data.hasUserInfo)
-        if (that.data.hasUserInfo) {
-            wx.request({
-                url: app.globalData.url + 'fav/list',
-                data: {openid: app.globalData.openid, sig: app.globalData.sig},
-                method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                header: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                },// 设置请求的 header
-                success: function (res) {
-                    console.log(res.data)
-                    self.setData({
-                        postsList: res.data
-                    });
-                },
-                fail: function () {
-                    console.log("index.js wx.request CheckCallUser fail");
-                },
-                complete: function () {
-                    // complete
-                }
-            })
-        }
-    },
-    onShow: function (e) {
-        // console.log("调用了onshow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        this.resetData()
+        var that = this;
+        console.log('resetData' ,that.data.hasUserInfo);
+        wx.request({
+            url: app.globalData.url + 'fav/list',
+            data: {openid: app.globalData.openid, sig: app.globalData.sig},
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },// 设置请求的 header
+            success: function (res) {
+                console.log(res.data)
+                that.setData({
+                    postsList: res.data,
+                    hasUserInfo:true,
+                    userInfo:app.globalData.userInfo,
+                });
+            },
+            fail: function () {
+                console.log("index.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+                // complete
+            }
+        })
     },
     deleteFavorite: function (e) {
         var that = this
@@ -142,6 +113,7 @@ Page({
     },
     getUserInfo: function (e) {
         // console.log(e)
+        var that = this;
         app.globalData.isGetUserInfo = true
         app.globalData.userInfo = e.detail.userInfo
         this.setData({
@@ -158,7 +130,7 @@ Page({
             },// 设置请求的 header
             success: function (res) {
                 console.log(res.data)
-                self.setData({
+                that.setData({
                     postsList: res.data
                 });
             },

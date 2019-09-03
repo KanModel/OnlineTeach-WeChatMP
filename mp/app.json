@@ -2,7 +2,6 @@
     "pages": [
         "pages/index/index",
         "pages/detail/detail",
-        "pages/detailFavorite/detailFavorite",
         "pages/logs/logs",
         "pages/page/page",
         "pages/about/about",

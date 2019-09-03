@@ -16,10 +16,10 @@
 
 <view class="readlog-container">
 
-  <view class="usertool">
+  <!--<view class="usertool">-->
     <!--<image class="usertool-img" src="../../images/exit.png" catchtap="exit"></image>-->
    
-  </view>
+  <!--</view>-->
 
   <view class="userinfo">
     <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -40,7 +40,7 @@
 
       </view>
     </block> -->
- <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+ <button wx:if="{{!userInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
     <block wx:else>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname" style="margin-left: 20px">{{userInfo.nickName}}</text>
@@ -54,7 +54,7 @@
       <button class="top-bar-item {{item.selected ? 'top-bar-item-Selected': '' }}">用户收藏</button>
     </block>
   </view>
-  <view class="common-list">
+  <view class="common-list" wx:if="{{userInfo}}">
       <block wx:key="id" wx:for="{{postsList}}">
           <view class="list-item has-img" index="{{index}}" id="{{item.post.id}}" bindtap="redictDetail"
           style="width: 100%;justify-content: space-between;">

@@ -27,6 +27,8 @@ App({
         wx.setStorageSync('logs', logs)
         // 小程序主动更新
         this.updateManager();
+        this.getUserInfo();
+        console.log(this.globalData)
     },
     towxml: new Towxml(),
     getUserInfo: function (cb) {
@@ -39,7 +41,7 @@ App({
                 success: function () {
                     wx.getUserInfo({
                         success: function (res) {
-                            console.log(res)
+                            // console.log("res":res)
                             that.globalData.userInfo = res.userInfo
                             typeof cb == "function" && cb(that.globalData.userInfo)
                         }

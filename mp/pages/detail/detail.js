@@ -100,7 +100,13 @@ Page({
         new ModalView;
     },
     postFavorite:function () {
-    if(app.globalData.isGetUserInfo&&app.globalData.detailTo==0){
+        console.log(this.data.detailTo)
+        var self=this;
+        self.setData({
+            detailTo:app.globalData.detailTo
+        })
+        var that = this;
+    if(app.globalData.isGetUserInfo&&that.data.detailTo==0){
         wx.request({
             url: app.globalData.url+'fav/'+this.data.id,
             data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
@@ -116,10 +122,14 @@ Page({
                         icon:'success',
                         duration:2000
                     })
-                    setTimeout(function(){
-                        wx.navigateBack({
-                        })
-                    },2000)
+                    // setTimeout(function(){
+                    //     wx.navigateBack({
+                    //     })
+                    // },2000)
+                    app.globalData.detailTo = 1
+                    self.setData({
+                        detailTo:1
+                    })
                 } else if(res.statusCode == 409){
                     console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
                     wx.showToast({
@@ -127,10 +137,10 @@ Page({
                         icon:'none',
                         duration:2000
                     })
-                    setTimeout(function(){
-                        wx.navigateBack({
-                        })
-                    },2000)
+                    // setTimeout(function(){
+                    //     wx.navigateBack({
+                    //     })
+                    // },2000)
                 }
             },
             fail: function () {
@@ -140,7 +150,7 @@ Page({
                 // complete
             }
         })
-    }else if(app.globalData.isGetUserInfo&&app.globalData.detailTo==1){
+    }else if(app.globalData.isGetUserInfo&&that.data.detailTo==1){
         wx.request({
             url: app.globalData.url+'fav/'+this.data.id,
             data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :this.data.id},
@@ -156,10 +166,14 @@ Page({
                         icon:'success',
                         duration:2000
                     })
-                    setTimeout(function(){
-                        wx.navigateBack({
-                        })
-                    },2000)
+                    app.globalData.detailTo = 0
+                    self.setData({
+                        detailTo:0
+                    })
+                    // setTimeout(function(){
+                    //     wx.navigateBack({
+                    //     })
+                    // },2000)
                 } else if(res.statusCode == 409) {
                     console.log("index.js wx.request CheckCallUser statusCode" + res.statusCode);
                     wx.showToast({
@@ -167,10 +181,10 @@ Page({
                         icon: 'none',
                         duration: 2000
                     })
-                    setTimeout(function(){
-                        wx.navigateBack({
-                        })
-                    },2000)
+                    // setTimeout(function(){
+                    //     wx.navigateBack({
+                    //     })
+                    // },2000)
                 }
             },
             fail: function () {
