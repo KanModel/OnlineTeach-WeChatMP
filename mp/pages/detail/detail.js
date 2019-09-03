@@ -77,15 +77,39 @@ Page({
         openid:"",
         userInfo:{},
         system:'',
-        downloadFileDomain:config.getDownloadFileDomain
-
+        downloadFileDomain:config.getDownloadFileDomain,
+        detailTo:0,
     },
     onLoad: function (options) {
-
+        var that = this;
+        wx.request({
+            url: app.globalData.url + 'fav/'+options.id,
+            method: "GET",
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :options.id},
+            success: function (res) {
+                if (res.data){
+                    that.setData({
+                        detailTo :1,
+                    })
+                }else{
+                    that.setData({
+                        detailTo :0,
+                    })
+                }
+            },
+            fail: function () {
+                console.log("index.js wx.request CheckCallUser fail");
+            },
+            complete: function () {
+                // complete
+            }
+        })
         var self=this;
         self.setData({
             id:options.id,
-            detailTo:app.globalData.detailTo
         })
         self.getEnableComment();
         self.fetchDetailData(options.id);        
@@ -102,9 +126,6 @@ Page({
     postFavorite:function () {
         console.log(this.data.detailTo)
         var self=this;
-        self.setData({
-            detailTo:app.globalData.detailTo
-        })
         var that = this;
     if(app.globalData.isGetUserInfo&&that.data.detailTo==0){
         wx.request({
@@ -126,7 +147,6 @@ Page({
                     //     wx.navigateBack({
                     //     })
                     // },2000)
-                    app.globalData.detailTo = 1
                     self.setData({
                         detailTo:1
                     })
@@ -166,7 +186,6 @@ Page({
                         icon:'success',
                         duration:2000
                     })
-                    app.globalData.detailTo = 0
                     self.setData({
                         detailTo:0
                     })

@@ -272,57 +272,11 @@ Page({
     },
     // 跳转至查看文章详情
     redictDetail: function (e) {
-        if(app.globalData.isGetUserInfo){
-            wx.request({
-                url: app.globalData.url + 'fav/'+e.currentTarget.id,
-                method: "GET",
-                header: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                },
-                data: { openid : app.globalData.openid, sig : app.globalData.sig ,postid :e.currentTarget.id},
-                success: function (res) {
-                    console.log(res)
-                    if (res.data){
-                        console.log(e)
-                        app.globalData.detailTo = 1;
-                        var id = e.currentTarget.id,
-                            url = '../detail/detail?id=' + id;
-                        wx.navigateTo({
-                            url: url
-                        })
-                    }else{
-                        console.log(e)
-                        app.globalData.detailTo = 0;
-                        var id = e.currentTarget.id,
-                            url = '../detail/detail?id=' + id;
-                        wx.navigateTo({
-                            url: url
-                        })
-                    }
-                },
-                fail: function () {
-                    console.log("index.js wx.request CheckCallUser fail");
-                },
-                complete: function () {
-                    // complete
-                }
-            })
-        }else{
-            app.globalData.detailTo = 0;
-            var id = e.currentTarget.id,
-                url = '../detail/detail?id=' + id;
-            wx.navigateTo({
-                url: url
-            })
-        }
-
-        // console.log(e)
-        // app.globalData.detailTo = 0;
-        // var id = e.currentTarget.id,
-        //     url = '../detail/detail?id=' + id;
-        // wx.navigateTo({
-        //     url: url
-        // })
+        var id = e.currentTarget.id,
+            url = '../detail/detail?id=' + id;
+        wx.navigateTo({
+            url: url
+        })
     },
     //首页图标跳转
     onNavRedirect: function (e) {
