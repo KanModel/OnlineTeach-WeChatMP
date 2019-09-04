@@ -1,15 +1,15 @@
-package me.kanmodel.july19.onlineteach.controller.rest;
+package me.kanmodel.july19.onlineteach.wx.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import me.kanmodel.july19.onlineteach.dao.PostRepository;
-import me.kanmodel.july19.onlineteach.dao.wx.WxFavoriteRepository;
-import me.kanmodel.july19.onlineteach.dao.wx.WxUserInfoRepository;
+import me.kanmodel.july19.onlineteach.wx.dao.WxFavoriteRepository;
+import me.kanmodel.july19.onlineteach.wx.dao.WxUserInfoRepository;
 import me.kanmodel.july19.onlineteach.entity.Post;
-import me.kanmodel.july19.onlineteach.entity.wx.WxFavorite;
-import me.kanmodel.july19.onlineteach.entity.wx.WxUserInfo;
+import me.kanmodel.july19.onlineteach.wx.entity.WxFavorite;
+import me.kanmodel.july19.onlineteach.wx.entity.WxUserInfo;
 import me.kanmodel.july19.onlineteach.service.WxValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

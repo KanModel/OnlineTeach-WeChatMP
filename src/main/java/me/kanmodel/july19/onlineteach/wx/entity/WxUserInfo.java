@@ -1,4 +1,4 @@
-package me.kanmodel.july19.onlineteach.entity.wx;
+package me.kanmodel.july19.onlineteach.wx.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

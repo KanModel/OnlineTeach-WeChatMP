@@ -1,4 +1,4 @@
-package me.kanmodel.july19.onlineteach.controller.rest;
+package me.kanmodel.july19.onlineteach.wx.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

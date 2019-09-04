@@ -1,7 +1,7 @@
 package me.kanmodel.july19.onlineteach.service;
 
-import me.kanmodel.july19.onlineteach.dao.wx.WxUserRepository;
-import me.kanmodel.july19.onlineteach.entity.wx.WxUser;
+import me.kanmodel.july19.onlineteach.wx.dao.WxUserRepository;
+import me.kanmodel.july19.onlineteach.wx.entity.WxUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

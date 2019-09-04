@@ -1,4 +1,4 @@
-package me.kanmodel.july19.onlineteach.entity.wx;
+package me.kanmodel.july19.onlineteach.wx.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
