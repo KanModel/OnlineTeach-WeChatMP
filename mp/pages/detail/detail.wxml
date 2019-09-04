@@ -1,24 +1,10 @@
-<!--/*
- * 
- * WordPres版微信小程序
- * author: jianbo
- * organization: 守望轩  www.watch-life.net
- * github:    https://github.com/iamxjb/winxin-app-watch-life.net
- * 技术支持微信号：iamxjb
- * 开源协议：MIT
- *Copyright (c) 2017 https://www.watch-life.net All rights reserved.
- * 
- */-->
-
-<import src="../../wxParse/wxParse.wxml" />
-<import src="../../templates/copyright.wxml" />
-<import src="../../templates/loading.wxml" />
-<import src="../../templates/modal-view/modal-view.wxml" />
-<import src="../../templates/login-popup.wxml" />
-
-<!--引入towxml模版入口文件，并使用模版-->
+<import src="../../wxParse/wxParse.wxml"/>
+<import src="../../templates/copyright.wxml"/>
+<import src="../../templates/loading.wxml"/>
+<import src="../../templates/modal-view/modal-view.wxml"/>
+<import src="../../templates/login-popup.wxml"/><!--引入towxml模版入口文件，并使用模版-->
 <import src="/towxml/entry.wxml"/>
-<view class = 'container'>
+<view class='container'>
     <view wx:if="{{detailTo==0}}">
         <button style="margin-top: 10px" bindtap="postFavorite">收藏</button>
     </view>
@@ -27,22 +13,11 @@
     </view>
 </view>
 <template is="entry" data="{{...article}}"/>
-
 <view class="container">
     <view class="container">
-
-    <view class="showerror" style="display:{{showerror}}">
-  <image src="../../images/cry80.png" style="height:100rpx;width:100rpx"></image>
-  <view class="errortext">
-     {{errMessage}}
-  </view>
-</view>
-
-        <view class="content-article-detail" style="display:{{display}}">
-            <view class="entry-title">
-                {{detail.title}}
-            </view>
-
+        <view class="showerror" style="display:{{showerror}}">
+            <image src="../../images/cry80.png" style="height:100rpx;width:100rpx"></image>
+            <view class="errortext">{{errMessage}}</view>
         </view>
     </view>
 </view>
