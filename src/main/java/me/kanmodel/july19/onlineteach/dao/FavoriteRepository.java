@@ -13,4 +13,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     List<Favorite> findAllByPostAndIsDelete(Post post,Boolean isDelete);
     List<Favorite> findAllByUserAndIsDelete(User user, Boolean isDelete);
     List<Favorite> findAllByUserAndIsDeleteFalse(User user);
+    Optional<Favorite> findByPostAndUser(Post post, User user);
+
 }

@@ -63,12 +63,19 @@ public class FavoriteController {
 //        updateUser.getFavorites().add(new Favorite(postRepository.findById(post).get()));
         //找到这个课程
         Post favPost = postRepository.findById(post).get();
-//        如果这个人之前没有收藏这个课程
-        if (!favoriteRepository.findByPostAndUserAndIsDelete(favPost, updateUser,false).isPresent()) {
+//        如果数据库没有这个字段
+        if (!favoriteRepository.findByPostAndUser(favPost, updateUser).isPresent()) {
             updateUser.getFavorites().add(new Favorite(postRepository.findById(post).get()
                     , new Timestamp(System.currentTimeMillis())));
             favoriteRepository.saveAll(updateUser.getFavorites());
-        } else {
+        } else if(favoriteRepository.findByPostAndUserAndIsDelete(favPost, updateUser,true).isPresent()){
+            //这里添加 之前收藏 删除收藏后又添加收藏的逻辑
+            Favorite favorite = favoriteRepository.findByPostAndUserAndIsDelete(favPost, updateUser,true).get();
+            favorite.setIsDelete(false);
+            favorite.setTime( new Timestamp(System.currentTimeMillis()));
+            favoriteRepository.save(favorite);
+        }
+        else{
             System.out.println("<" + favPost.getTitle() + ">已收藏!");
             modelAndView.addObject("res", "<" + favPost.getTitle() + ">已收藏!");
         }
