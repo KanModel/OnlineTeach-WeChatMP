@@ -28,6 +28,9 @@ public class Favorite {
     @Column(name = "time", columnDefinition = "datetime default current_timestamp")
     private Timestamp time;
 
+    @Column(name = "isDelete", columnDefinition = "tinyint default 0")
+    private Integer isDelete;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -74,5 +77,13 @@ public class Favorite {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 }

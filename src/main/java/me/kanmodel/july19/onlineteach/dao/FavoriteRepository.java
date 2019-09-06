@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
-    Optional<Favorite> findByPostAndUser(Post post, User user);
-    List<Favorite> findAllByPost(Post post);
+    Optional<Favorite> findByPostAndUserAndIsDelete(Post post, User user,Integer isDelete);
+    List<Favorite> findAllByPostAndIsDelete(Post post,Integer isDelete);
 }

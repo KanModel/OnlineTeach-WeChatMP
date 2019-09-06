@@ -62,7 +62,7 @@ public class FavoriteController {
         User updateUser = userRepository.findById(userId).get();
 //        updateUser.getFavorites().add(new Favorite(postRepository.findById(post).get()));
         Post favPost = postRepository.findById(post).get();
-        if (!favoriteRepository.findByPostAndUser(favPost, updateUser).isPresent()) {
+        if (!favoriteRepository.findByPostAndUserAndIsDelete(favPost, updateUser,0).isPresent()) {
             updateUser.getFavorites().add(new Favorite(postRepository.findById(post).get()
                     , new Timestamp(System.currentTimeMillis())));
             favoriteRepository.saveAll(updateUser.getFavorites());
@@ -78,7 +78,9 @@ public class FavoriteController {
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public ModelAndView deleteFavorite(ModelAndView modelAndView,
                                        Long id) {
-        favoriteRepository.deleteById(id);
+        Favorite favorite = favoriteRepository.findById(id).get();
+        favorite.setIsDelete(1);
+        favoriteRepository.save(favorite);
         modelAndView.setViewName("redirect:/favorite");
         return modelAndView;
     }
