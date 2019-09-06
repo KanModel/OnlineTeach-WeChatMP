@@ -8,12 +8,18 @@ package me.kanmodel.july19.onlineteach.controller;/**
 import me.kanmodel.july19.onlineteach.dao.OptionRepository;
 import me.kanmodel.july19.onlineteach.dao.RoleRepository;
 import me.kanmodel.july19.onlineteach.dao.UserRepository;
-import me.kanmodel.july19.onlineteach.entity.Role;
 import me.kanmodel.july19.onlineteach.entity.SysRole;
 import me.kanmodel.july19.onlineteach.entity.User;
 import me.kanmodel.july19.onlineteach.service.UserService;
+import me.kanmodel.july19.onlineteach.wx.dao.WxUserInfoRepository;
+import me.kanmodel.july19.onlineteach.wx.entity.WxUserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +44,8 @@ import java.util.Random;
  */
 @Controller
 public class UserController {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -48,6 +56,10 @@ public class UserController {
     private RoleRepository roleRepository;
     @Autowired
     private OptionRepository optionRepository;
+    @Autowired
+    private WxUserInfoRepository wxUserInfoRepository;
+
+    private static Sort sort = new Sort(Sort.Direction.ASC, "id");
 
     @ModelAttribute
     public void generalModel(Model model) {
@@ -82,6 +94,31 @@ public class UserController {
         modelAndView.addObject("pageNo", pageNo);
         modelAndView.addObject("pageCount", pageCount);
         if (login != null) modelAndView.addObject("login", login);
+        return modelAndView;
+    }
+
+    @RequestMapping("/user/wx_list")
+    public ModelAndView listWxUsers(@RequestParam(value = "res", required = false) String res,
+                                    @RequestParam(value = "login", required = false, defaultValue = "") String name,
+                                    @RequestParam(value = "no", defaultValue = "1", required = false) int pageNo,
+                                    @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+        Page<WxUserInfo> page;
+        logger.info("listWxUser: name" + name);
+        if (name != null && !name.equals("")) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+            page = wxUserInfoRepository.findAllByNameLike("%"+name+"%", pageable);
+        } else {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+            page = wxUserInfoRepository.findAll(pageable);
+        }
+        List<WxUserInfo> list = page.getContent();
+        int pageCount = page.getTotalPages();
+        ModelAndView modelAndView = new ModelAndView("/user/wx_user_list");
+        modelAndView.addObject("wxUserList", list);
+        modelAndView.addObject("res", res);
+        modelAndView.addObject("pageNo", pageNo);
+        modelAndView.addObject("pageCount", pageCount);
+        if (name != null) modelAndView.addObject("login", name);
         return modelAndView;
     }
 
