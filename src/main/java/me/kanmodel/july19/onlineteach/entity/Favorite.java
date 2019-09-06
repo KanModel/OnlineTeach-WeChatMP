@@ -28,7 +28,9 @@ public class Favorite {
     @Column(name = "time", columnDefinition = "datetime default current_timestamp")
     private Timestamp time;
 
+    @Column(name = "is_delete", columnDefinition = "bit(1) default 0")
     private Boolean isDelete  = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;

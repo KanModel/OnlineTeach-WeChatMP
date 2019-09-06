@@ -49,9 +49,7 @@ public class FavoriteController {
     public String listFavorite(Model model,
                                String res) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Long userId = user.getId();
-//        model.addAttribute("fav_list", userRepository.findById(userId).get().getFavorites());
-        model.addAttribute("fav_list", favoriteRepository.findAllByUserAndIsDelete(user,false));
+        model.addAttribute("fav_list", favoriteRepository.findAllByUserAndIsDeleteFalse(user));
         model.addAttribute("res", res);
         return "favorite/list";
     }

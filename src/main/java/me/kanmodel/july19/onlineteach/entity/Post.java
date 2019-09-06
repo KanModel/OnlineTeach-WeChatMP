@@ -45,6 +45,7 @@ public class Post {
     private Timestamp modifiedTime;
 
     @ApiModelProperty("是否已经删除")
+    @Column(name = "is_delete", columnDefinition = "bit(1) default 0")
     private Boolean isDelete = false;
 
     public Post(String title, String content, Timestamp createdTime, Boolean isDelete) {

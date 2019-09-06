@@ -1,8 +1,6 @@
 package me.kanmodel.july19.onlineteach.dao;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import me.kanmodel.july19.onlineteach.entity.Post;
-import me.kanmodel.july19.onlineteach.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

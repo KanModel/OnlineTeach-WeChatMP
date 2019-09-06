@@ -17,12 +17,11 @@ public class WxFavorite {
     private Post post;
     private String openid;
     @Column(name = "time", columnDefinition = "datetime default current_timestamp")
-    private Timestamp time;
+    private Timestamp time = new Timestamp(System.currentTimeMillis());
 
     public WxFavorite(Post post, String openid) {
         this.post = post;
         this.openid = openid;
-        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public WxFavorite() {

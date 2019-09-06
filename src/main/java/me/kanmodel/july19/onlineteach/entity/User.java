@@ -18,31 +18,35 @@ import java.util.List;
 @Entity
 @Table(name = "sys_users")
 public class User implements UserDetails {
-//    @Autowired
-//    private RoleRepository roleRepository;
-//    private UserRepository userRepository;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+
     @Column(name = "user_login", columnDefinition = "varchar(20)  default ''", unique = true, nullable = false)
     private String login;
+
     @Column(name = "user_pass", columnDefinition = "varchar(255)  default ''", nullable = false)
     private String pass;
+
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private List<SysRole> roles;
+
     @Column(name = "user_email", columnDefinition = "varchar(20)  default ''", nullable = false)
     private String email;
+
     @Column(name = "user_registered", columnDefinition = "datetime default current_timestamp")
     private Timestamp registered;
+
     @Column(name = "user_display", columnDefinition = "varchar(20)  default ''", nullable = false)
     private String display;
+
     @OneToMany
     @JoinColumn(name = "user_id")
     @OrderBy("id asc")
     private List<Favorite> favorites;
 
+    @Column(name = "is_delete", columnDefinition = "bit(1) default 0")
     private Boolean isDelete  = false;
 
     public User() {
@@ -174,7 +178,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !isDelete;
     }
 
     @Override
