@@ -43,7 +43,7 @@ public class MainController {
 
     @RequestMapping(value = {"/index", "/"})
     public String index(Model model) {
-        model.addAttribute("list", postRepository.findAllByIsDelete(0));
+        model.addAttribute("list", postRepository.findAllByIsDelete(false));
         model.addAttribute("index_title", optionRepository.findByKey("index_title").get().getValue());
         model.addAttribute("index_subtitle", optionRepository.findByKey("index_subtitle").get().getValue());
         return "index";

@@ -24,13 +24,13 @@ public class UserService {
      */
     public Page<User> selectAll(int pageNum, int pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
-        Page<User> users = userRepository.findAll(pageable);
+        Page<User> users = userRepository.findAllByIsDelete(false,pageable);
         return users;
     }
 
     public Page<User> selectAllByLogin(int pageNum, int pageSize, String login) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, new Sort(Sort.Direction.ASC, "user_id"));
-        Page<User> users = userRepository.findAllByLogin(login, pageable);
+        Page<User> users = userRepository.findAllByLoginAndIsDelete(login, pageable);
         return users;
     }
 }

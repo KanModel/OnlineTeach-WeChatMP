@@ -43,6 +43,8 @@ public class User implements UserDetails {
     @OrderBy("id asc")
     private List<Favorite> favorites;
 
+    private Boolean isDelete  = false;
+
     public User() {
     }
 
@@ -183,5 +185,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 }

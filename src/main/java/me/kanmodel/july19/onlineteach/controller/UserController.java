@@ -67,7 +67,7 @@ public class UserController {
                                   @RequestParam(value = "login", required = false, defaultValue = "") String login,
                                   @RequestParam(value = "no", defaultValue = "1", required = false) int pageNo,
                                   @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
-        System.out.println("PageNo" + pageNo + " PageSize" + pageSize);
+        System.out.println("PageNo" + pageNo + " PageSize" + pageSize + login);
         Page<User> page;
         if (login != null && !login.equals("")) {
             page = userService.selectAllByLogin(pageNo, pageSize, login);
@@ -175,7 +175,8 @@ public class UserController {
                 return modelAndView;
             }
         }
-        userRepository.deleteById(Long.valueOf(id));
+        deleteUser.setIsDelete(true);
+        userRepository.save(deleteUser);
         modelAndView.addObject("no", pageNo);
         modelAndView.addObject("res", "成功删除id为" + id + "的用户");
         return modelAndView;

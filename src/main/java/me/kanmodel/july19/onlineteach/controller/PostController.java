@@ -45,7 +45,7 @@ public class PostController {
     @RequestMapping("/p{id}")
     public String post(Model model,
                        @PathVariable Long id) {
-        Optional<Post> op = postRepository.findById(id);
+        Optional<Post> op = postRepository.findByIdAndIsDelete(id,false);
         op.ifPresent(post -> model.addAttribute("post", post));
         return "post/post";
     }
@@ -59,7 +59,7 @@ public class PostController {
     public String createPost(String title,
                              String content) {
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Post post = new Post(title, content, time, 0);
+        Post post = new Post(title, content, time, false);
         Long id = postRepository.save(post).getId();
 //        Long id = postRepository.findByCreatedTime(time).getId();
         return "redirect:/post/edit/p" + id;
@@ -68,7 +68,7 @@ public class PostController {
     @RequestMapping("/edit/p{id}")
     public String editPost(Model model,
                            @PathVariable Long id) {
-        Optional<Post> op = postRepository.findById(id);
+        Optional<Post> op = postRepository.findByIdAndIsDelete(id,false);
         op.ifPresent(post -> model.addAttribute("post", post));
         return "post/edit";
     }
@@ -78,7 +78,7 @@ public class PostController {
                              Long id,
                              String title,
                              String content) {
-        Optional<Post> op = postRepository.findById(id);
+        Optional<Post> op = postRepository.findByIdAndIsDelete(id,false);
         if (op.isPresent()){
             Post post = op.get();
             post.setTitle(title);
@@ -106,12 +106,12 @@ public class PostController {
 
     @RequestMapping("/del/p{id}")
     public String deletePost(@PathVariable Long id){
-        Post post = postRepository.findById(id).get();
-        post.setIsDelete(1);
-        List<Favorite> favoriteList = favoriteRepository.findAllByPostAndIsDelete(post,0);
+        Post post = postRepository.findByIdAndIsDelete(id,false).get();
+        post.setIsDelete(true);
+        List<Favorite> favoriteList = favoriteRepository.findAllByPostAndIsDelete(post,false);
         for (Favorite item:favoriteList
              ) {
-            item.setIsDelete(1);
+            item.setIsDelete(true);
         }
         favoriteRepository.saveAll(favoriteList);
         postRepository.save(post);

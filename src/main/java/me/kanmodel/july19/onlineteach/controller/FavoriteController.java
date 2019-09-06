@@ -49,8 +49,9 @@ public class FavoriteController {
     public String listFavorite(Model model,
                                String res) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId = user.getId();
-        model.addAttribute("fav_list", userRepository.findById(userId).get().getFavorites());
+//        Long userId = user.getId();
+//        model.addAttribute("fav_list", userRepository.findById(userId).get().getFavorites());
+        model.addAttribute("fav_list", favoriteRepository.findAllByUserAndIsDelete(user,false));
         model.addAttribute("res", res);
         return "favorite/list";
     }
@@ -59,10 +60,13 @@ public class FavoriteController {
     public ModelAndView addFavorite(ModelAndView modelAndView, Long post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = user.getId();
+        //找到這個用戶
         User updateUser = userRepository.findById(userId).get();
 //        updateUser.getFavorites().add(new Favorite(postRepository.findById(post).get()));
+        //找到这个课程
         Post favPost = postRepository.findById(post).get();
-        if (!favoriteRepository.findByPostAndUserAndIsDelete(favPost, updateUser,0).isPresent()) {
+//        如果这个人之前没有收藏这个课程
+        if (!favoriteRepository.findByPostAndUserAndIsDelete(favPost, updateUser,false).isPresent()) {
             updateUser.getFavorites().add(new Favorite(postRepository.findById(post).get()
                     , new Timestamp(System.currentTimeMillis())));
             favoriteRepository.saveAll(updateUser.getFavorites());
@@ -79,7 +83,8 @@ public class FavoriteController {
     public ModelAndView deleteFavorite(ModelAndView modelAndView,
                                        Long id) {
         Favorite favorite = favoriteRepository.findById(id).get();
-        favorite.setIsDelete(1);
+        //将收藏的isDelete改为true 保存到数据库
+        favorite.setIsDelete(true);
         favoriteRepository.save(favorite);
         modelAndView.setViewName("redirect:/favorite");
         return modelAndView;

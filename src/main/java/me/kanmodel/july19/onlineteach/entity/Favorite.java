@@ -28,9 +28,7 @@ public class Favorite {
     @Column(name = "time", columnDefinition = "datetime default current_timestamp")
     private Timestamp time;
 
-    @Column(name = "isDelete", columnDefinition = "tinyint default 0")
-    private Integer isDelete;
-
+    private Boolean isDelete  = false;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -79,11 +77,11 @@ public class Favorite {
         this.user = user;
     }
 
-    public Integer getIsDelete() {
+    public Boolean getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Integer isDelete) {
+    public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
 }

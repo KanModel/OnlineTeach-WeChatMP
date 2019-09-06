@@ -45,10 +45,9 @@ public class Post {
     private Timestamp modifiedTime;
 
     @ApiModelProperty("是否已经删除")
-    @Column(name = "isDelete", columnDefinition = "tinyint default 0")
-    private Integer isDelete;
+    private Boolean isDelete = false;
 
-    public Post(String title, String content, Timestamp createdTime, Integer isDelete) {
+    public Post(String title, String content, Timestamp createdTime, Boolean isDelete) {
         this.title = title;
         this.content = content;
         this.createdTime = createdTime;
@@ -116,11 +115,11 @@ public class Post {
         return time.format(modifiedTime.getTime());
     }
 
-    public Integer getIsDelete() {
+    public Boolean getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Integer isDelete) {
+    public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
 }
