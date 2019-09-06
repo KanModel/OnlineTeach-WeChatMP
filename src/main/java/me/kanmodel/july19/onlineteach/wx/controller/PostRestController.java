@@ -33,7 +33,7 @@ public class PostRestController {
                                                    @RequestParam(value = "no", defaultValue = "1", required = false) int pageNo,
                                                    @RequestParam(value = "size", defaultValue = "6", required = false) int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Post> postPage = postRepository.findAllByTitle(title, pageable);
+        Page<Post> postPage = postRepository.findAllByTitleAndIsDelete(title,pageable);
         return new ResponseEntity<>(postPage.getContent(), HttpStatus.OK);
     }
 

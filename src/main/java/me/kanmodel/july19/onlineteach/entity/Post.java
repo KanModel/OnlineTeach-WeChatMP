@@ -44,11 +44,16 @@ public class Post {
     @Column(name = "modified_time", columnDefinition = "datetime")
     private Timestamp modifiedTime;
 
-    public Post(String title, String content, Timestamp createdTime) {
+    @ApiModelProperty("是否已经删除")
+    @Column(name = "isDelete", columnDefinition = "tinyint default 0")
+    private Integer isDelete;
+
+    public Post(String title, String content, Timestamp createdTime, Integer isDelete) {
         this.title = title;
         this.content = content;
         this.createdTime = createdTime;
         this.modifiedTime = createdTime;
+        this.isDelete = isDelete;
     }
 
     public Post() {
@@ -109,5 +114,13 @@ public class Post {
     public String getModifiedTimeFroma(){
         SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return time.format(modifiedTime.getTime());
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 }
