@@ -59,7 +59,7 @@ public class PostController {
     public String createPost(String title,
                              String content) {
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Post post = new Post(title, content, time);
+        Post post = new Post(title, content, time, 0);
         Long id = postRepository.save(post).getId();
 //        Long id = postRepository.findByCreatedTime(time).getId();
         return "redirect:/post/edit/p" + id;
@@ -95,7 +95,7 @@ public class PostController {
                            @RequestParam(value = "no", defaultValue = "1", required = false) int pageNo,
                            @RequestParam(value = "size", defaultValue = "6", required = false) int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Post> postPage = postRepository.findAllByTitle(title ,pageable);
+        Page<Post> postPage = postRepository.findAllByTitleAndIsDelete(title ,pageable);
 //        model.addAttribute("list", postRepository.findAll());
         model.addAttribute("list", postPage.getContent());
         model.addAttribute("pageNo", pageNo);
@@ -107,9 +107,14 @@ public class PostController {
     @RequestMapping("/del/p{id}")
     public String deletePost(@PathVariable Long id){
         Post post = postRepository.findById(id).get();
-        List<Favorite> favoriteList = favoriteRepository.findAllByPost(post);
-        favoriteRepository.deleteAll(favoriteList);
-        postRepository.deleteById(id);
+        post.setIsDelete(1);
+        List<Favorite> favoriteList = favoriteRepository.findAllByPostAndIsDelete(post,0);
+        for (Favorite item:favoriteList
+             ) {
+            item.setIsDelete(1);
+        }
+        favoriteRepository.saveAll(favoriteList);
+        postRepository.save(post);
         return "redirect:/post/list";
     }
 }
