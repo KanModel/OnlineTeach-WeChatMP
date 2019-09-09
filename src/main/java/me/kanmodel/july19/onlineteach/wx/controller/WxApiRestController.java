@@ -31,6 +31,9 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 和微信端登录做出响应
+ */
 @Api(tags = "微信API")
 @RestController
 @RequestMapping("/api/wx")

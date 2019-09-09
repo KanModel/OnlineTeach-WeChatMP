@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 课程的持久化方法
+ */
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(nativeQuery = true, value = "select * from sys_post where title like %:title% ")
     Page<Post> findAllByTitle(@Param("title") String title, Pageable pageable);

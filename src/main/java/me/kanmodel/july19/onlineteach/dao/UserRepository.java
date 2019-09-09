@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.dao;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-03-23-9:52
- */
+package me.kanmodel.july19.onlineteach.dao;
 
 import me.kanmodel.july19.onlineteach.entity.User;
 import org.springframework.data.domain.Page;
@@ -16,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @description: todo
+ * @description: 用户的持久化方法
  * @author: KanModel
  * @create: 2019-03-23 09:52
  */

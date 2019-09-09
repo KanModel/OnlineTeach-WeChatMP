@@ -1,14 +1,9 @@
-package me.kanmodel.july19.onlineteach.entity;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-07-09-8:58
- */
+package me.kanmodel.july19.onlineteach.entity;
 
 import javax.persistence.*;
 
 /**
- * @description: todo
+ * @description: 系统设置实体
  * @author: KanModel
  * @create: 2019-07-09 08:58
  */

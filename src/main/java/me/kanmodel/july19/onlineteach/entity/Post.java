@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.entity;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-06-25-10:44
- */
+package me.kanmodel.july19.onlineteach.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +8,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 /**
- * @description: 内容JavaBean
+ * @description: 内容JavaBean 课程实体
  * @author: KanModel
  * @create: 2019-06-25 10:44
  */

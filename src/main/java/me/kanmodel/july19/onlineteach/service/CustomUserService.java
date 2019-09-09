@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.service;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-04-07-12:22
- */
+package me.kanmodel.july19.onlineteach.service;
 
 import me.kanmodel.july19.onlineteach.dao.UserRepository;
 import me.kanmodel.july19.onlineteach.entity.User;
@@ -15,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Optional;
 
 /**
- * @description: todo
+ * @description:Security用户认证用 查找用户
  * @author: KanModel
  * @create: 2019-04-07 12:22
  */

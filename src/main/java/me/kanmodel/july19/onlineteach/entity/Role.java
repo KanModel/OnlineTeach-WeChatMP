@@ -2,7 +2,7 @@ package me.kanmodel.july19.onlineteach.entity;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:
+ * Description:角色实体
  * User: KanModel
  * Date: 2019-04-13-10:31
  */

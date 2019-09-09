@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.adapter;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-04-05-21:55
- */
+package me.kanmodel.july19.onlineteach.adapter;
 
 import me.kanmodel.july19.onlineteach.service.CustomUserService;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * @description: todo
+ * @description: SpringSecurity配置类
  * @author: KanModel
  * @create: 2019-04-05 21:55
  */

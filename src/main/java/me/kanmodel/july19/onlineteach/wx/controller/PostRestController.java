@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 向微信前台提供课程数据
+ */
 @Api(tags = "内容管理")
 @RestController
 @RequestMapping("/api/post")

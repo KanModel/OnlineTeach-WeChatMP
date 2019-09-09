@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.controller;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-04-13-21:15
- */
+package me.kanmodel.july19.onlineteach.controller;
 
 import me.kanmodel.july19.onlineteach.dao.OptionRepository;
 import org.slf4j.Logger;
@@ -17,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * @description: todo
+ * @description: 像前台提供出错的处理
  * @author: KanModel
  * @create: 2019-04-13 21:15
  */

@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+/**
+ * 对前台显示用户 查询分页的业务逻辑
+ */
 @Service
 public class UserService {
     @Autowired

@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.controller;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-07-09-10:30
- */
+package me.kanmodel.july19.onlineteach.controller;
 
 import me.kanmodel.july19.onlineteach.dao.FavoriteRepository;
 import me.kanmodel.july19.onlineteach.dao.OptionRepository;
@@ -24,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.Timestamp;
 
 /**
- * @description: todo
+ * @description: 收藏控制类 接收对收藏进行增删改查的请求
  * @author: KanModel
  * @create: 2019-07-09 10:30
  */

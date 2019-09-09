@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.adapter;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-07-09-9:05
- */
+package me.kanmodel.july19.onlineteach.adapter;
 
 import me.kanmodel.july19.onlineteach.dao.OptionRepository;
 import me.kanmodel.july19.onlineteach.dao.RoleRepository;
@@ -21,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 /**
- * @description: todo
+ * @description: 项目启动时运行 添加options Role的初始化数据
  * @author: KanModel
  * @create: 2019-07-09 09:05
  */

@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.controller;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-07-04-18:25
- */
+package me.kanmodel.july19.onlineteach.controller;
 
 import me.kanmodel.july19.onlineteach.dao.OptionRepository;
 import me.kanmodel.july19.onlineteach.dao.PostRepository;
@@ -25,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 /**
- * @description: todo
+ * @description: 接收访问项目时和登录时登录登出的请求
  * @author: KanModel
  * @create: 2019-07-04 18:25
  */

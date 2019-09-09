@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 获取微信端用户的信息
+ */
 @Api(tags = "WX用户信息管理")
 @RestController
 @RequestMapping("/api/info")

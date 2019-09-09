@@ -1,9 +1,4 @@
-package me.kanmodel.july19.onlineteach.controller;/**
- * Created with IntelliJ IDEA.
- * Description:
- * User: KanModel
- * Date: 2019-07-09-9:48
- */
+package me.kanmodel.july19.onlineteach.controller;
 
 import me.kanmodel.july19.onlineteach.dao.OptionRepository;
 import me.kanmodel.july19.onlineteach.entity.Option;
@@ -17,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @description: todo
+ * @description: 接收对系统配置更改的请求
  * @author: KanModel
  * @create: 2019-07-09 09:48
  */

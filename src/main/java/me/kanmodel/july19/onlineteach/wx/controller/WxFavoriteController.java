@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 对前台收藏的添加和删除做出相应的响应
+ */
 @Api(tags = "WX收藏管理")
 @RestController
 @RequestMapping("/api/fav")
