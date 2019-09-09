@@ -1,4 +1,3 @@
-/* WordPres版微信小程序 author: jianbo organization: 守望轩  www.watch-life.net github:    https://github.com/iamxjb/winxin-app-watch-life.net 技术支持微信号：iamxjb 开源协议：MIT *Copyright (c) 2017 https://www.watch-life.net All rights reserved. */
 var Api = require('../../utils/api.js');
 var wxRequest = require('../../utils/wxRequest.js')
 import config from '../../utils/config.js'
@@ -25,7 +24,9 @@ Page({
         displaySwiper: "block",
         floatDisplay: "none",
         searchKey: "",
-    }, onShareAppMessage: function () {
+    },
+
+    onShareAppMessage: function () {
         var title = "分享“袋袋云”";
         var path = ""
         if (this.data.categories && this.data.categories != 0) {
@@ -40,7 +41,9 @@ Page({
             }, fail: function (res) {/* 转发失败*/
             }
         }
-    }, onReachBottom: function () {
+    },
+
+    onReachBottom: function () {
         var self = this;
         if (!self.data.isLastPage) {
             self.setData({page: self.data.page + 1});
@@ -50,7 +53,9 @@ Page({
             console.log('最后一页');
         }
     },
-    /*加载分页*/ loadMore: function (e) {
+
+    /*加载分页*/
+    loadMore: function (e) {
         var self = this;
         if (!self.data.isLastPage) {
             self.setData({page: self.data.page + 1});
@@ -59,7 +64,9 @@ Page({
         } else {
             wx.showToast({title: '没有更多内容', mask: false, duration: 1000});
         }
-    }, onLoad: function (options) {
+    },
+
+    onLoad: function (options) {
         var self = this;
         if (options.search && options.search != '') {
             wx.setNavigationBarTitle({
@@ -69,7 +76,10 @@ Page({
             self.setData({search: options.search, isSearchPage: "block", searchKey: options.search})
             this.fetchPostsData(self.data);
         }
-    }, /*获取文章列表数据*/ fetchPostsData: function (data) {
+    },
+
+    /*获取文章列表数据*/
+    fetchPostsData: function (data) {
         var self = this;
         if (!data) data = {};
         if (!data.page) data.page = 1;
@@ -96,7 +106,10 @@ Page({
                 }
             }
         })
-    }, /* 跳转至查看文章详情*/ redictDetail: function (e) {/* console.log('查看文章');*/
+    },
+
+    /* 跳转至查看文章详情*/
+    redictDetail: function (e) {/* console.log('查看文章');*/
         var id = e.currentTarget.id, url = '../detail/detail?id=' + id;
         wx.navigateTo({url: url})
     }, /*获取分类列表*/ fetchCategoriesData: function (id) {

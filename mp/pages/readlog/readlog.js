@@ -1,4 +1,3 @@
-/* WordPres版微信小程序 author: jianbo organization: 守望轩  www.watch-life.net github:    https://github.com/iamxjb/winxin-app-watch-life.net 技术支持微信号：iamxjb 开源协议：MIT *Copyright (c) 2017 https://www.watch-life.net All rights reserved. */
 import config from '../../utils/config.js'
 
 var app = getApp();
@@ -12,9 +11,14 @@ Page({
         shownodata: "none",
         openid: '',
         isLoginPopup: false
-    }, /** 生命周期函数--监听页面加载 */ onLoad: function (options) {
+    },
+
+    /** 生命周期函数--监听页面加载 */
+    onLoad: function (options) {
         console.log(app.globalData.userInfo)
-    }, onShow: function () {
+    },
+
+    onShow: function () {
         console.log(app.globalData.userInfo)
         this.resetData();
     }, resetData() {
@@ -33,7 +37,9 @@ Page({
                 console.log("index.js wx.request CheckCallUser fail");
             },
         })
-    }, deleteFavorite: function (e) {
+    },
+
+    deleteFavorite: function (e) {
         var that = this;
         console.log(e);
         wx.request({
@@ -55,7 +61,9 @@ Page({
                 console.log("index.js wx.request CheckCallUser fail");
             },
         })
-    }, getUserInfo: function (e) {/* console.log(e)*/
+    },
+
+    getUserInfo: function (e) {/* console.log(e)*/
         var that = this;
         // console.log(e);
         app.globalData.userInfo = e.detail.userInfo;

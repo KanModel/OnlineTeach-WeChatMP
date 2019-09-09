@@ -1,4 +1,3 @@
-/* WordPres版微信小程序 author: jianbo organization: 守望轩  www.watch-life.net github:    https://github.com/iamxjb/winxin-app-watch-life.net 技术支持微信号：iamxjb 开源协议：MIT *Copyright (c) 2017 https://www.watch-life.net All rights reserved. */
 var Auth = require('../../utils/auth.js');
 import config from '../../utils/config.js'
 
@@ -12,7 +11,10 @@ Page({
         search: '',
         showerror: "none",
         showallDisplay: "block",
-    }, formSubmit: function (e) {
+    },
+
+    // 搜索
+    formSubmit: function (e) {
         var url = '../list/list'
         var key = '';
         if (e.currentTarget.id == "search-input") {
@@ -26,7 +28,10 @@ Page({
         } else {
             wx.showModal({title: '提示', content: '请输入内容', showCancel: false,});
         }
-    }, onShareAppMessage: function () {
+    },
+
+    // 转发
+    onShareAppMessage: function () {
         let users = wx.getStorageSync('user');
         return {
             title: '“' + config.getWebsiteName + '”网站微信小程序 在线转发',
@@ -36,7 +41,9 @@ Page({
             fail: function (res) {/* 转发失败*/
             }
         }
-    }, onPullDownRefresh: function () {
+    },
+
+    onPullDownRefresh: function () {
         var self = this;
         self.setData({
             showerror: "none",
@@ -47,7 +54,9 @@ Page({
             page: 1,
         });
         this.fetchPostsData(self.data);
-    }, onReachBottom: function () {
+    },
+
+    onReachBottom: function () {
         var self = this;
         if (!self.data.isLastPage) {
             self.setData({page: self.data.page + 1});
@@ -56,15 +65,22 @@ Page({
         } else {
             console.log('最后一页');
         }
-    }, onLoad: function (options) {
+    },
+
+    onLoad: function (options) {
         var self = this;
         self.fetchPostsData(self.data);
         Auth.wxLogin()
-    }, onShow: function (options) {
+    },
+
+    onShow: function (options) {
         var self = this;
         self.fetchPostsData(self.data);
         wx.setStorageSync('openLinkCount', 0);
-    }, /*获取文章列表数据*/ fetchPostsData: function (data) {
+    },
+
+    /*获取文章列表数据*/
+    fetchPostsData: function (data) {
         var self = this;
         if (!data) data = {};
         if (!data.page) data.page = 1;
@@ -91,7 +107,10 @@ Page({
                 }
             }
         })
-    }, /*加载分页*/ loadMore: function (e) {
+    },
+
+    /*加载分页*/
+    loadMore: function (e) {
         var self = this;
         if (!self.data.isLastPage) {
             self.setData({page: self.data.page + 1});
