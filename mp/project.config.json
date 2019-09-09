@@ -22,7 +22,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.6.6",
 	"appid": "wxa5f389c97aa8b032",
-	"projectname": "demo",
+	"projectname": "mp",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
