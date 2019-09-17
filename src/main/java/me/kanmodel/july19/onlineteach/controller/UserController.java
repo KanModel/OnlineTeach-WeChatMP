@@ -178,11 +178,17 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("redirect:/user");
         Optional<User> user;
         System.out.println("Find user id: " + id + ", name: " + name);
-        if (!id.equals("")) user = userRepository.findById(Long.valueOf(id));
-        else {
-            if (name.equals("")) user = Optional.empty();
-            else user = userRepository.findByLogin(name);
+        //id非数字
+        try {
+            if (!id.equals("")) user = userRepository.findById(Long.valueOf(id));
+            else {
+                if (name.equals("")) user = Optional.empty();
+                else user = userRepository.findByLogin(name);
+            }
+        }catch (NumberFormatException e){
+            return modelAndView.addObject("find_res", "id应该为数字！");
         }
+
         if (user.isPresent()) {
             return modelAndView
                     .addObject("find_res", "查找结果:" + user.get().getLogin());
