@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,11 @@ public class RegController {
 
     @Autowired
     private OptionRepository optionRepository;
+
+    @ModelAttribute
+    public void generalModel(Model model) {
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
+    }
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     private String reg(Model model) {
