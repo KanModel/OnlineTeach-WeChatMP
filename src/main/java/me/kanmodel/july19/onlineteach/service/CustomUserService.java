@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Optional;
 
 /**
- * @description:Security用户认证用 查找用户
+ * @description: Security用户认证用查找用户
  * @author: KanModel
  * @create: 2019-04-07 12:22
  */

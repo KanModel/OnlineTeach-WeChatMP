@@ -16,9 +16,9 @@
             <form th:action="@{/post/modify}" method="post">
                 <div class="form-group">
                     <label for="title" class="col-sm-1-12 col-form-label"></label>
-                    <div class="col-sm-1-12">
+                    <div class="col-sm-1-8" style="width: 95%;padding-left: 5%">
                         <header>标题</header>
-                        <input type="text" th:value="${post.title}" width="80%"
+                        <input type="text"
                                class="form-control input-normal" name="title" id="title">
                     </div>
                     <p th:if="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
