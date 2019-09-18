@@ -26,7 +26,6 @@ public class RegController {
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     private String reg(Model model) {
-        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "reg.html";
     }
 

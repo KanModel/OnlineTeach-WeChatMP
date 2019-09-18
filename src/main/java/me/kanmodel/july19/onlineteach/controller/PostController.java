@@ -96,7 +96,6 @@ public class PostController {
         model.addAttribute("pageNo", pageNo);
         model.addAttribute("pageCount", postPage.getTotalPages());
         model.addAttribute("title", title);
-        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "/post/list";
     }
 
