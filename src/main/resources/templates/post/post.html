@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       lang="zh">
 <head>
-    <title th:text="${'教学内容-' + post.title}"></title>
+    <title th:text="${post.title+' - ' + site_name}"></title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>

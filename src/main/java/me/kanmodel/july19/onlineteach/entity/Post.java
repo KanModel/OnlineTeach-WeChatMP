@@ -104,6 +104,7 @@ public class Post {
     public String getCreatedTimeFormat(){
         SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return time.format(createdTime.getTime());
+
     }
 
     public String getModifiedTimeFroma(){

@@ -3,12 +3,12 @@
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>系统设置</title>
+    <title th:text="${'系统设置 - ' + site_name}"></title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div th:replace="fragments/user_nav :: user-nav"></div>
+<!--<div th:replace="fragments/user_nav :: user-nav"></div>-->
 <div class="container">
     <table class="table table-striped table-bordered">
         <tr>

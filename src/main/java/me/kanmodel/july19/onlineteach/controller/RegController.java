@@ -1,5 +1,6 @@
 package me.kanmodel.july19.onlineteach.controller;
 
+import me.kanmodel.july19.onlineteach.dao.OptionRepository;
 import me.kanmodel.july19.onlineteach.dao.UserRepository;
 import me.kanmodel.july19.onlineteach.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ public class RegController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private OptionRepository optionRepository;
+
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
-    private String reg() {
+    private String reg(Model model) {
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "reg.html";
     }
 

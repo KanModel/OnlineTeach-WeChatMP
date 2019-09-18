@@ -66,6 +66,7 @@ public class UserController {
                        @RequestParam(value = "add_res", required = false) String add_res,
                        @RequestParam(value = "find_res", required = false) String find_res) {
         model.addAttribute("add_res", add_res).addAttribute("find_res", find_res);
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "user/user";
     }
 
@@ -137,6 +138,7 @@ public class UserController {
             model.addAttribute("add_res", "用户[" + login + "]已存在！");
             System.out.println("User[" + login + "] is existed!");
         }
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "user/user";
     }
 
@@ -158,6 +160,7 @@ public class UserController {
             }
         }
         model.addAttribute("add_res", res);
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "user/user";
     }
 

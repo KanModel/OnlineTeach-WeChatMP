@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>登录页面</title>
+    <title th:text="${'登录 - ' + site_name}"></title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <!--<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>-->
 </head>

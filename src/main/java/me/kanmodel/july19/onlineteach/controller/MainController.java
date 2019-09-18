@@ -41,6 +41,7 @@ public class MainController {
         model.addAttribute("list", postRepository.findAllByIsDelete(false));
         model.addAttribute("index_title", optionRepository.findByKey("index_title").get().getValue());
         model.addAttribute("index_subtitle", optionRepository.findByKey("index_subtitle").get().getValue());
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "index";
     }
 
@@ -51,6 +52,7 @@ public class MainController {
         model.addAttribute("user", user);
 //        System.out.println(user.getTeacherInfo().getName());
         model.addAttribute("res", res);
+        model.addAttribute("site_name", optionRepository.findByKey("site_name").get().getValue());
         return "space";
     }
 
