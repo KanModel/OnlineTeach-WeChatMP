@@ -32,15 +32,12 @@ https://github.com/KanModel/OnlineTeach-WeChatMP
 > 1. JRE 1.8以上
 > 2. MySQL 5.6以上
 
-# 使用技术
-1.Spring Boot
-
-2.Spring Data JPA
-
-3.Spring Security
-
-4.FastJson
-
-5.Swagger2
-
-6.Thymeleaf
+# 引用技术
+1. Spring Boot
+2. Spring Data JPA
+3. Spring Security
+4. FastJson
+5. Swagger2
+6. Thymeleaf
+7. [Editor.md](https://github.com/pandao/editor.md)
+8. [Towxml](https://github.com/sbfkcel/towxml)
