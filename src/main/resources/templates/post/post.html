@@ -19,12 +19,20 @@
             <span th:if="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
                   th:text="'发布于:' + ${post.getCreatedTimeFormat()} + ' 最后修改:' + ${post.getModifiedTimeFroma()}"
                   class="text-info"></span>
-            <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/favorite/add}" method="post">
+            <div class="row">
+                <form th:action="@{/favorite/add}"
+                      method="post"
+                      sec:authorize="isAuthenticated()"
+                      class="col-lg-1 pull-left">
                     <label>
                         <input type="hidden" th:value="${post.id}" name="post">
                         <button type="submit" class="btn">收藏</button>
                     </label>
+                </form>
+                <form th:action="@{'/post/edit/p' + ${post.id}}"
+                      sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')"
+                      class="col-lg-1 pull-left">
+                    <button type="submit" class="btn">编辑</button>
                 </form>
             </div>
         </div>
@@ -57,11 +65,6 @@
                 });
             });
         </script>
-        <form th:action="@{'/post/edit/p' + ${post.id}}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')">
-            <div class="center-block">
-                <button type="submit" class="btn">编辑</button>
-            </div>
-        </form>
     </th:block>
     <th:block th:unless="${post} != null">
         <p class="danger">无此内容</p>

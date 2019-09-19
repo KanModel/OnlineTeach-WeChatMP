@@ -19,7 +19,7 @@
                     <div class="col-sm-1-8" style="width: 95%;padding-left: 5%">
                         <header>标题</header>
                         <input type="text"
-                               class="form-control input-normal" name="title" id="title">
+                               class="form-control input-normal" name="title" id="title" th:value="${post.title}">
                     </div>
                     <p th:if="${post.getCreatedTime().getTime() != post.getModifiedTime().getTime()}"
                        th:text="'发布于:' + ${post.getCreatedTimeFormat()} + ' 最后修改:' + ${post.getModifiedTimeFroma()}"

@@ -18,10 +18,8 @@
                 <a th:href="@{'/post/p' + ${post.id}}"><h3 th:text="${post.title}"></h3></a>
                 <p th:text="${post.getCreatedTimeFormat()}" class="text-info"></p>
                 <p th:text="${post.getShort()}"></p>
-                <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')">
+                <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')" class="form-inline">
                     <a th:href="@{'/post/edit/p' + ${post.id}}">编辑</a>
-                </div>
-                <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER')">
                     <a th:href="@{'/post/del/p' + ${post.id}}">删除</a>
                 </div>
             </div>
